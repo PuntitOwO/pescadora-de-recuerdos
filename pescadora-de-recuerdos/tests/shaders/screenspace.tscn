@@ -1,73 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=2 format=2]
 
-[sub_resource type="VisualShaderNodeTextureUniform" id=1]
-uniform_name = "Texture"
-
-[sub_resource type="VisualShaderNodeInput" id=2]
-output_port_for_preview = 0
-input_name = "screen_uv"
-
-[sub_resource type="VisualShader" id=3]
-code = "shader_type canvas_item;
-render_mode unshaded;
-
-uniform sampler2D Texture;
-
-
-
-void vertex() {
-// Output:0
-
-}
-
-void fragment() {
-// Input:3
-	vec3 n_out3p0 = vec3(SCREEN_UV, 0.0);
-
-// TextureUniform:2
-	vec3 n_out2p0;
-	float n_out2p1;
-	{
-		vec4 n_tex_read = texture(Texture, n_out3p0.xy);
-		n_out2p0 = n_tex_read.rgb;
-		n_out2p1 = n_tex_read.a;
-	}
-
-// Output:0
-	COLOR.rgb = n_out2p0;
-	COLOR.a = n_out2p1;
-
-}
-
-void light() {
-// Output:0
-
-}
-"
-graph_offset = Vector2( -513, 110 )
-mode = 1
-flags/light_only = false
-flags/unshaded = true
-nodes/fragment/2/node = SubResource( 1 )
-nodes/fragment/2/position = Vector2( -40, 140 )
-nodes/fragment/3/node = SubResource( 2 )
-nodes/fragment/3/position = Vector2( -320, 240 )
-nodes/fragment/connections = PoolIntArray( 3, 0, 2, 0, 2, 0, 0, 0, 2, 1, 0, 1 )
-
-[sub_resource type="Gradient" id=4]
-
-[sub_resource type="GradientTexture2D" id=5]
-gradient = SubResource( 4 )
-fill_from = Vector2( 0, 1 )
-
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 3 )
-shader_param/Texture = SubResource( 5 )
+[ext_resource path="res://resources/materials/screenspace.tres" type="Material" id=1]
 
 [node name="ScreenSpaceUV" type="Node2D"]
 
 [node name="Model" type="Polygon2D" parent="."]
-material = SubResource( 6 )
+material = ExtResource( 1 )
 position = Vector2( -44.1295, -16.2162 )
 scale = Vector2( 2.91867, 2.1583 )
 polygon = PoolVector2Array( 67, 17, 256, 14, 355, 187, 139, 273, 23, 150 )
