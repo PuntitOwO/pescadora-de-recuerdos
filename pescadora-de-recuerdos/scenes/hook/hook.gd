@@ -1,12 +1,12 @@
 extends KinematicBody2D
 
-export var max_down_velocity = 10.0
-export var max_up_velocity = -100.0
+export var max_down_velocity = 30.0
+export var max_up_velocity = -300.0
 export var max_move_velocity = 300.0
 export var down_acceleration = 10
 export var up_decceleration = 10
-export var fast_down_velocity = 100
-export var move_velocity = 100
+export var fast_down_velocity = 150
+export var move_velocity = 200
 
 var velocity := Vector2.ZERO
 
