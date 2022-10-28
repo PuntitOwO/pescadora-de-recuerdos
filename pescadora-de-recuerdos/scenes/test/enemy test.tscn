@@ -19,4 +19,4 @@ end_node_attached_path = NodePath("../Hook")
 start_node_attached_path = NodePath("../Position2D")
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 369, -144 )
+position = Vector2( 394, -131 )
