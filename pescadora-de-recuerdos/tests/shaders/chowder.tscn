@@ -31,8 +31,8 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/tile_factor = 5.248
-shader_param/tile_offset = Vector2( 0.074, 0 )
+shader_param/tile_factor = 8.4
+shader_param/tile_offset = Vector2( -1.794, 0.141 )
 shader_param/pattern = ExtResource( 2 )
 
 [node name="Node2D" type="Node2D"]
@@ -40,4 +40,5 @@ position = Vector2( 188, 115 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 2 )
+scale = Vector2( 0.991107, 1 )
 texture = ExtResource( 1 )
