@@ -1,18 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/hook/hook.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/danger/void_zone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/fishing_line/fishing_line.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/hook/hook_camera.gd" type="Script" id=4]
 
 [node name="Test" type="Node2D"]
 
 [node name="Hook" parent="." instance=ExtResource( 1 )]
-
-[node name="Camera2D" type="Camera2D" parent="Hook"]
-current = true
-limit_left = 0
-limit_top = 0
-limit_right = 768
-smoothing_enabled = true
 
 [node name="Danger" type="Node2D" parent="."]
 
@@ -35,6 +30,22 @@ polygon = PoolVector2Array( 704, 832, 768, 832, 768, 1408, 192, 1408, 192, 960, 
 
 [node name="Polygon2D" parent="Danger/Node2D4" index="0"]
 polygon = PoolVector2Array( 576, 1024, 576, 768, 448, 704, 64, 704, 0, 832, 0, 1408, 64, 1408, 64, 832, 96, 768, 384, 768 )
+
+[node name="FishingLine" parent="." instance=ExtResource( 3 )]
+end_node_attached_path = NodePath("../Hook")
+start_node_attached_path = NodePath("../Camera2D/Position2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 768
+smoothing_enabled = true
+script = ExtResource( 4 )
+target_path = NodePath("../Hook")
+
+[node name="Position2D" type="Position2D" parent="Camera2D"]
+position = Vector2( 384, -704 )
 
 [editable path="Danger/Node2D"]
 [editable path="Danger/Node2D2"]
