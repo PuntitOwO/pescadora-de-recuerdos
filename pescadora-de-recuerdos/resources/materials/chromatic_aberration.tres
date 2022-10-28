@@ -1,0 +1,41 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount_x = 1.0;
+uniform float amount_y = 1.0;
+uniform float r_dir_x = 1;
+uniform float r_dir_y = 1;
+uniform float g_dir_x = 1;
+uniform float g_dir_y = 1;
+uniform float b_dir_x = 1;
+uniform float b_dir_y = 1;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount_x = amount_x * texture(offset_texture, UV).r / 100.0;
+		float adjusted_amount_y = amount_y * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + r_dir_x* adjusted_amount_x, UV.y + r_dir_y* adjusted_amount_y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x + b_dir_x*adjusted_amount_x, UV.y + b_dir_y*adjusted_amount_y)).b;
+	}
+	COLOR = color;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/apply = true
+shader_param/amount_x = 5.0
+shader_param/amount_y = 5.0
+shader_param/r_dir_x = 1.0
+shader_param/r_dir_y = 1.0
+shader_param/g_dir_x = 1.0
+shader_param/g_dir_y = 1.0
+shader_param/b_dir_x = 1.0
+shader_param/b_dir_y = 1.0
