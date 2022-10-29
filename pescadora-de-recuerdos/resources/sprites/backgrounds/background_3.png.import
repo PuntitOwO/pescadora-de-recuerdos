@@ -2,33 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-<<<<<<< HEAD
 path="res://.import/background_3.png-47c1b6c56a34624a445533dacf403678.stex"
-=======
-<<<<<<< HEAD:pescadora-de-recuerdos/resources/sprites/backgrounds/Día.png.import
-path="res://.import/Día.png-8ba43564904335e87fd889b0d06510cd.stex"
-=======
-path="res://.import/background_3.png-47c1b6c56a34624a445533dacf403678.stex"
->>>>>>> 6fdee3c (background files name fix):pescadora-de-recuerdos/resources/sprites/backgrounds/background_3.png.import
->>>>>>> 6fdee3c (background files name fix)
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<< HEAD
 source_file="res://resources/sprites/backgrounds/background_3.png"
 dest_files=[ "res://.import/background_3.png-47c1b6c56a34624a445533dacf403678.stex" ]
-=======
-<<<<<<< HEAD:pescadora-de-recuerdos/resources/sprites/backgrounds/Día.png.import
-source_file="res://resources/sprites/backgrounds/Día.png"
-dest_files=[ "res://.import/Día.png-8ba43564904335e87fd889b0d06510cd.stex" ]
-=======
-source_file="res://resources/sprites/backgrounds/background_3.png"
-dest_files=[ "res://.import/background_3.png-47c1b6c56a34624a445533dacf403678.stex" ]
->>>>>>> 6fdee3c (background files name fix):pescadora-de-recuerdos/resources/sprites/backgrounds/background_3.png.import
->>>>>>> 6fdee3c (background files name fix)
 
 [params]
 
