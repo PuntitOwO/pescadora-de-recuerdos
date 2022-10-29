@@ -66,7 +66,6 @@ func _physics_process(_delta: float) -> void:
 
 func _collected(body:Node2D, image_index:int, next_level:bool) -> void:
 	body.queue_free()
-	print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	GameManager.show_image(image_index, next_level)
 
 func _knockback(direction:Vector2) -> void:
