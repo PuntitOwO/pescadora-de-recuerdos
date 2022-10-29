@@ -1,10 +1,63 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/hook/hook.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/danger/void_tilemap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/fishing_line/fishing_line.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/hook/hook_camera.gd" type="Script" id=4]
 [ext_resource path="res://resources/materials/screenspace_viewport.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Shader" id=16]
+code = "shader_type canvas_item;
+uniform sampler2D Colormap : hint_albedo;
+
+void fragment() {
+// Get the fragment location
+	vec3 location = vec3(UV, 0.0);
+
+// Get the colors from the image at specified location
+	vec3 colorIn;
+	float alphaIn;
+	{
+		vec4 TEXTURE_tex_read = texture(TEXTURE, location.xy);
+		colorIn = TEXTURE_tex_read.rgb;
+		alphaIn = TEXTURE_tex_read.a;
+	}
+
+// get the greyscale value through the highest of r, g, and b
+	float grey;
+	{
+		vec3 c = colorIn;
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		grey = max2;
+	}
+
+// Read the colormap and use the greyscale value to map in the new color.
+	vec3 colorOut;
+	float alphaOut;
+	{
+		vec4 n_tex_read = texture(Colormap, vec2(grey, 0.0));
+		colorOut = n_tex_read.rgb;
+		alphaOut = n_tex_read.a;
+	}
+
+// Profit.
+	COLOR.rgb = colorOut;
+	COLOR.a = alphaIn;
+
+}"
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.3, 0.5, 0.8, 1 )
+colors = PoolColorArray( 0.0156863, 0.0509804, 0.105882, 1, 0.247059, 0.0941176, 0.301961, 1, 0.772549, 0.466667, 0.396078, 1, 0.858824, 0.635294, 0.529412, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
+shader = SubResource( 16 )
+shader_param/Colormap = SubResource( 6 )
 
 [sub_resource type="VisualShaderNodeTextureUniform" id=1]
 uniform_name = "Texture"
@@ -13,7 +66,7 @@ uniform_name = "Texture"
 output_port_for_preview = 0
 input_name = "screen_uv"
 
-[sub_resource type="VisualShader" id=3]
+[sub_resource type="VisualShader" id=10]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -62,12 +115,12 @@ nodes/fragment/connections = PoolIntArray( 3, 0, 2, 0, 2, 0, 0, 0, 2, 1, 0, 1 )
 [sub_resource type="ViewportTexture" id=4]
 viewport_path = NodePath("ParallaxViewport")
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=11]
 resource_local_to_scene = true
-shader = SubResource( 3 )
+shader = SubResource( 10 )
 shader_param/Texture = SubResource( 4 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 32, 512 )
 
 [sub_resource type="RectangleShape2D" id=7]
@@ -81,8 +134,11 @@ viewport_path = NodePath("ParallaxViewport")
 [node name="Hook" parent="." instance=ExtResource( 1 )]
 position = Vector2( 386, 511 )
 
+[node name="Sprite" parent="Hook" index="0"]
+material = SubResource( 9 )
+
 [node name="VoidTileMap" parent="." instance=ExtResource( 2 )]
-material = SubResource( 5 )
+material = SubResource( 11 )
 tile_data = PoolIntArray( 917504, 0, 0, 917515, 0, 0, 983040, 0, 0, 983051, 0, 0, 1048576, 0, 0, 1048587, 0, 0, 1114112, 0, 0, 1114113, 0, 0, 1114122, 0, 0, 1114123, 0, 0, 1179648, 0, 0, 1179649, 0, 0, 1179650, 0, 0, 1179657, 0, 0, 1179658, 0, 0, 1179659, 0, 0, 1245184, 0, 0, 1245185, 0, 0, 1245186, 0, 0, 1245193, 0, 0, 1245194, 0, 0, 1245195, 0, 0, 1310720, 0, 0, 1310721, 0, 0, 1310722, 0, 0, 1310728, 0, 0, 1310729, 0, 0, 1310730, 0, 0, 1310731, 0, 0, 1376256, 0, 0, 1376257, 0, 0, 1376258, 0, 0, 1376263, 0, 0, 1376264, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376267, 0, 0, 1441792, 0, 0, 1441793, 0, 0, 1441794, 0, 0, 1441802, 0, 0, 1441803, 0, 0, 1507328, 0, 0, 1507329, 0, 0, 1507330, 0, 0, 1507339, 0, 0, 1572864, 0, 0, 1572865, 0, 0, 1572866, 0, 0, 1572875, 0, 0, 1638400, 0, 0, 1638401, 0, 0, 1638402, 0, 0, 1638403, 0, 0, 1638411, 0, 0, 1703936, 0, 0, 1703937, 0, 0, 1703938, 0, 0, 1703939, 0, 0, 1703940, 0, 0, 1703947, 0, 0, 1769472, 0, 0, 1769473, 0, 0, 1769474, 0, 0, 1769475, 0, 0, 1769476, 0, 0, 1769477, 0, 0, 1769478, 0, 0, 1769479, 0, 0, 1769483, 0, 0, 1835008, 0, 0, 1835009, 0, 0, 1835010, 0, 0, 1835011, 0, 0, 1835012, 0, 0, 1835013, 0, 0, 1835014, 0, 0, 1835015, 0, 0, 1835019, 0, 0, 1900544, 0, 0, 1900545, 0, 0, 1900546, 0, 0, 1900547, 0, 0, 1900548, 0, 0, 1900549, 0, 0, 1900550, 0, 0, 1900551, 0, 0, 1900555, 0, 0, 1966080, 0, 0, 1966081, 0, 0, 1966082, 0, 0, 1966083, 0, 0, 1966084, 0, 0, 1966085, 0, 0, 1966086, 0, 0, 1966087, 0, 0, 1966091, 0, 0, 2031616, 0, 0, 2031617, 0, 0, 2031620, 0, 0, 2031621, 0, 0, 2031622, 0, 0, 2031623, 0, 0, 2031627, 0, 0, 2097152, 0, 0, 2097157, 0, 0, 2097158, 0, 0, 2097159, 0, 0, 2097163, 0, 0, 2162688, 0, 0, 2162695, 0, 0, 2162699, 0, 0, 2228224, 0, 0, 2228235, 0, 0, 2293760, 0, 0, 2293763, 0, 0, 2293771, 0, 0, 2359296, 0, 0, 2359299, 0, 0, 2359300, 0, 0, 2359307, 0, 0, 2424832, 0, 0, 2424835, 0, 0, 2424836, 0, 0, 2424837, 0, 0, 2424843, 0, 0, 2490368, 0, 0, 2490371, 0, 0, 2490372, 0, 0, 2490373, 0, 0, 2490374, 0, 0, 2490379, 0, 0, 2555904, 0, 0, 2555908, 0, 0, 2555909, 0, 0, 2555910, 0, 0, 2555911, 0, 0, 2555912, 0, 0, 2555913, 0, 0, 2555914, 0, 0, 2555915, 0, 0, 2621440, 0, 0, 2621451, 0, 0, 2686976, 0, 0, 2686987, 0, 0, 2752512, 0, 0, 2752513, 0, 0, 2752523, 0, 0, 2818048, 0, 0, 2818049, 0, 0, 2818050, 0, 0, 2818056, 0, 0, 2818059, 0, 0, 2883584, 0, 0, 2883585, 0, 0, 2883586, 0, 0, 2883587, 0, 0, 2883588, 0, 0, 2883589, 0, 0, 2883590, 0, 0, 2883591, 0, 0, 2883592, 0, 0, 2883595, 0, 0, 2949131, 0, 0, 3014667, 0, 0, 3080203, 0, 0, 3145739, 0, 0 )
 
 [node name="FishingLine" parent="." instance=ExtResource( 3 )]
@@ -112,11 +168,11 @@ position = Vector2( 0, -544 )
 
 [node name="CollisionLeft" type="CollisionShape2D" parent="Camera2D/LimitsX"]
 position = Vector2( -416, 544 )
-shape = SubResource( 6 )
+shape = SubResource( 12 )
 
 [node name="CollisionRight" type="CollisionShape2D" parent="Camera2D/LimitsX"]
 position = Vector2( 416, 544 )
-shape = SubResource( 6 )
+shape = SubResource( 12 )
 
 [node name="UpperLimit" type="StaticBody2D" parent="."]
 position = Vector2( 384, -32 )
