@@ -3,6 +3,8 @@ extends Node
 signal input
 
 export (Array, Texture) var images
+export (Array, PackedScene) var levels
+var current_level := 1
 
 func _ready() -> void:
 	set_process(false)
@@ -42,19 +44,23 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_select") or Input.is_action_just_pressed("ui_accept"):
 		emit_signal("input")
 
-func show_image(image_index: int) -> void:
+func show_image(image_index: int, next_level: bool) -> void:
 	$"%Image".texture = images[image_index]
 	blur_and_fade_image_in()
 	set_process(true)
 	yield(self, "input")
 	set_process(false)
-	unblur_and_fade_image_out()
-	$"%Image".hide()
+	if next_level:
+		$"%Fade".color.a = 1.0
+		$"%Fade".visible = true
+		$"%Screenshot".visible = false
+		$"%Image".visible = false
+		get_tree().change_scene_to(levels[current_level])
+		current_level = (current_level + 1) % len(levels)
+	else:
+		unblur_and_fade_image_out()
 
-func _unhandled_key_input(event: InputEventKey) -> void:
-	if event.pressed and not event.echo:
-		if event.scancode == KEY_1:
-			show_image(0)
-		if event.scancode == KEY_2:
-			show_image(1)
-		
+func fade_fade() -> void:
+	var tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property($"%Fade", "color:a", 0.0, 0.5)
+	

@@ -307,7 +307,7 @@ tracks/6/keys = {
 "values": [ true ]
 }
 
-[node name="Level1" type="Node2D"]
+[node name="Level4" type="Node2D"]
 
 [node name="VoidTileMap" parent="." instance=ExtResource( 7 )]
 material = SubResource( 9 )

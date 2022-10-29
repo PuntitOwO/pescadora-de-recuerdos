@@ -1,21 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/autoload/game_manager.gd" type="Script" id=1]
-
-[sub_resource type="Gradient" id=3]
-
-[sub_resource type="GradientTexture2D" id=4]
-gradient = SubResource( 3 )
-fill_from = Vector2( 0.510309, 0.525773 )
-fill_to = Vector2( 1, 1 )
-repeat = 2
-
-[sub_resource type="Gradient" id=5]
-
-[sub_resource type="GradientTexture2D" id=6]
-gradient = SubResource( 5 )
-fill_from = Vector2( 0.505155, 0.518686 )
-repeat = 2
+[ext_resource path="res://scenes/levels/level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/levels/level2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/levels/level4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/levels/level3.tscn" type="PackedScene" id=5]
+[ext_resource path="res://icon.png" type="Texture" id=6]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -35,7 +25,8 @@ shader_param/pixel_factor = 0.277
 [node name="GameManager" type="Node"]
 pause_mode = 2
 script = ExtResource( 1 )
-images = [ SubResource( 4 ), SubResource( 6 ) ]
+images = [ ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 6 ) ]
+levels = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ) ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -50,3 +41,10 @@ centered = false
 unique_name_in_owner = true
 visible = false
 modulate = Color( 1, 1, 1, 0 )
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )

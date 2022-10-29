@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "Collectable",
+"language": "GDScript",
+"path": "res://scenes/collectables/object.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://scenes/enemies/enemies.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://scenes/danger/void_tilemap.gd"
 } ]
 _global_script_class_icons={
+"Collectable": "",
 "Enemy": "",
 "VoidTile": ""
 }
@@ -27,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="pescadora-de-recuerdos"
-run/main_scene="res://scenes/test.tscn"
+run/main_scene="res://scenes/levels/level1.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -54,9 +54,20 @@ func _physics_process(_delta: float) -> void:
 	#collisions
 	for i in get_slide_count():
 		var collision := get_slide_collision(i)
+		if collision.collider is Collectable:
+			var image_index = (collision.collider as Collectable).image_index
+			var next_level = (collision.collider as Collectable).next_level
+			_collected(collision.collider, image_index, next_level)
+			return
+			
 		if collision.collider is VoidTile:
 			var knockback_direction = collision.position.direction_to(global_position)
 			_knockback(knockback_direction)
+
+func _collected(body:Node2D, image_index:int, next_level:bool) -> void:
+	body.queue_free()
+	print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	GameManager.show_image(image_index, next_level)
 
 func _knockback(direction:Vector2) -> void:
 	$hook_hurt.play()
