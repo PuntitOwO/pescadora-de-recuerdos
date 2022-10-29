@@ -11,6 +11,9 @@ export var knockback_strength = 150
 
 var velocity := Vector2.ZERO
 
+func _ready():
+	get_viewport().audio_listener_enable_2d = true
+
 func _physics_process(_delta: float) -> void:
 	if velocity.y < 0:
 		velocity.y += up_decceleration
@@ -21,9 +24,11 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("move_down") and velocity.y >= 0.0:
 		velocity.y = fast_down_velocity
 	if Input.is_action_just_pressed("move_left"):
+		$hook_pull.play()
 		velocity.y = max_up_velocity
 		velocity.x -= move_velocity
 	if Input.is_action_just_pressed("move_right"):
+		$hook_pull.play()
 		velocity.y = max_up_velocity
 		velocity.x += move_velocity
 	velocity.x = clamp(velocity.x, -max_move_velocity, max_move_velocity)
@@ -36,6 +41,7 @@ func _physics_process(_delta: float) -> void:
 			_knockback(knockback_direction)
 
 func _knockback(direction:Vector2) -> void:
+	$hook_hurt.play()
 	set_physics_process(false)
 	velocity = Vector2.ZERO
 	var tween = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
