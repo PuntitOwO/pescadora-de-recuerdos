@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+void fragment(){
+	vec4 bg = texture(SCREEN_TEXTURE, SCREEN_UV);
+	float avg = (bg.r + bg.g + bg.b)/3.f;
+	COLOR = vec4(avg,avg,avg,1.f);
+	}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 2 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 18.7177, 16.8194 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 746, -1.99994 )
+scale = Vector2( -7.87213, 7.05224 )
+texture = ExtResource( 1 )
