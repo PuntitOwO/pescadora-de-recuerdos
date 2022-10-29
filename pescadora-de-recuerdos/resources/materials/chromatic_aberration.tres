@@ -31,11 +31,11 @@ void fragment() {
 [resource]
 shader = SubResource( 1 )
 shader_param/apply = true
-shader_param/amount_x = 5.0
-shader_param/amount_y = 5.0
+shader_param/amount_x = 1.0
+shader_param/amount_y = 1.0
 shader_param/r_dir_x = 1.0
 shader_param/r_dir_y = 1.0
-shader_param/g_dir_x = 1.0
+shader_param/g_dir_x = -1.0
 shader_param/g_dir_y = 1.0
 shader_param/b_dir_x = 1.0
-shader_param/b_dir_y = 1.0
+shader_param/b_dir_y = -1.0
