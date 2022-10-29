@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planets.png-3d1e7781f6cbe688f3c292d01c46798d.stex"
+path="res://.import/Día.png-8ba43564904335e87fd889b0d06510cd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/sprites/backgrounds/planets.png"
-dest_files=[ "res://.import/planets.png-3d1e7781f6cbe688f3c292d01c46798d.stex" ]
+source_file="res://resources/sprites/backgrounds/Día.png"
+dest_files=[ "res://.import/Día.png-8ba43564904335e87fd889b0d06510cd.stex" ]
 
 [params]
 
