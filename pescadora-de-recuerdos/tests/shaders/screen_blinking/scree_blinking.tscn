@@ -8,7 +8,7 @@ code = "shader_type canvas_item;
 uniform vec4 color: hint_color;
 uniform float multiplier = 0.2;
 uniform float softness = 3.0;
-uniform int amount = 40;
+
 
 void fragment(){
 	
@@ -19,9 +19,8 @@ void fragment(){
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 3 )
 shader_param/color = Color( 0, 0, 0, 1 )
-shader_param/multiplier = -0.04
-shader_param/softness = 1.587
-shader_param/amount = 40
+shader_param/multiplier = 0.26
+shader_param/softness = 0.956
 
 [node name="Node2D" type="Node2D"]
 
