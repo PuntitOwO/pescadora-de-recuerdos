@@ -44,6 +44,16 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_select") or Input.is_action_just_pressed("ui_accept"):
 		emit_signal("input")
 
+func _reset() -> void:
+	$"%Screenshot".visible = false
+	$"%Screenshot".material.set_shader_param("pixel_factor", 1.0)
+	$"%Screenshot".modulate = Color.white
+	$"%Image".visible = false
+	$"%Image".modulate = Color("00ffffff")
+	$"%Fade".visible = false
+	$"%Fade".color = Color.black
+	
+
 func show_image(image_index: int, next_level: bool) -> void:
 	$"%Image".texture = images[image_index]
 	blur_and_fade_image_in()
@@ -51,10 +61,8 @@ func show_image(image_index: int, next_level: bool) -> void:
 	yield(self, "input")
 	set_process(false)
 	if next_level:
-		$"%Fade".color.a = 1.0
+		_reset()
 		$"%Fade".visible = true
-		$"%Screenshot".visible = false
-		$"%Image".visible = false
 		get_tree().change_scene_to(levels[current_level])
 		current_level = (current_level + 1) % len(levels)
 	else:
