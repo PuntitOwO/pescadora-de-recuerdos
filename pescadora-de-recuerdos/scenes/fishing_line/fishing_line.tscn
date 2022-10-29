@@ -9,3 +9,5 @@ script = ExtResource( 1 )
 points = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 width = 2.5
 default_color = Color( 1, 1, 1, 1 )
+joint_mode = 2
+round_precision = 15

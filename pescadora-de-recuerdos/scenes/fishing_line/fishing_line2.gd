@@ -10,6 +10,7 @@ export (NodePath) var start_node_attached_path
 var start_node_attached
 var y_distance
 var x_dir
+var y_dir
 var point_pos
 var points_number
 export var restitution_vel = 0.1
@@ -38,7 +39,9 @@ func _physics_process(delta):
 	for i in range(1,points_number):
 		y_distance = end_node_attached.global_position[1] - start_node_attached.global_position[1] 
 		x_dir = $Line2D.get_point_position(i+1)[0] - $Line2D.get_point_position(i)[0]
+		y_dir = $Line2D.get_point_position(i+1)[1] - $Line2D.get_point_position(i)[1]
 		point_pos = $Line2D.get_point_position(i)
-		$Line2D.set_point_position(i,Vector2(point_pos[0] + x_dir * restitution_vel * sqrt(i)/20, start_node_attached.global_position[1] + y_distance * i/points_number))
+		#$Line2D.set_point_position(i,Vector2(point_pos[0] + x_dir * restitution_vel * sqrt(i)/20, start_node_attached.global_position[1] + y_distance * i/points_number))
+		$Line2D.set_point_position(i,Vector2(point_pos[0] + x_dir * restitution_vel * sqrt(i)/20, point_pos[1] + y_dir * restitution_vel * ((sqrt(i)/points_number - 0.1))))
 	$Line2D.set_point_position(0,start_node_attached.global_position)
 	$Line2D.set_point_position(points_number,end_node_attached.global_position)
