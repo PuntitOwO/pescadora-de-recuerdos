@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/autoload/game_manager.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=3]
+
+[sub_resource type="GradientTexture2D" id=4]
+gradient = SubResource( 3 )
+fill_from = Vector2( 0.510309, 0.525773 )
+fill_to = Vector2( 1, 1 )
+repeat = 2
+
+[sub_resource type="Gradient" id=5]
+
+[sub_resource type="GradientTexture2D" id=6]
+gradient = SubResource( 5 )
+fill_from = Vector2( 0.505155, 0.518686 )
+repeat = 2
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float pixel_factor : hint_range(0, 1) = 0.5;
+
+void fragment() {
+	vec2 pixelNumber = vec2(textureSize(TEXTURE, 0)) * pixel_factor;
+	vec2 pixelatedUV = round(UV * pixelNumber) / pixelNumber;
+	COLOR = texture(TEXTURE, pixelatedUV);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/pixel_factor = 0.277
+
+[node name="GameManager" type="Node"]
+pause_mode = 2
+script = ExtResource( 1 )
+images = [ SubResource( 4 ), SubResource( 6 ) ]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Screenshot" type="Sprite" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+material = SubResource( 2 )
+centered = false
+
+[node name="Image" type="Sprite" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+modulate = Color( 1, 1, 1, 0 )

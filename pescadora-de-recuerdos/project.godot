@@ -14,6 +14,10 @@ config/name="pescadora-de-recuerdos"
 run/main_scene="res://scenes/test.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameManager="*res://scenes/autoload/game_manager.tscn"
+
 [display]
 
 window/size/width=768
