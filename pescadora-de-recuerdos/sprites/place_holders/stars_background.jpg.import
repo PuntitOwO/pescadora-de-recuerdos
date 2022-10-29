@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/stars background.jpg-14a1c545f6977db1b37e62f2bf76758b.s3tc.stex"
-path.etc2="res://.import/stars background.jpg-14a1c545f6977db1b37e62f2bf76758b.etc2.stex"
+path.s3tc="res://.import/stars_background.jpg-143243f9fc80481b3d0c3335c513e32b.s3tc.stex"
+path.etc2="res://.import/stars_background.jpg-143243f9fc80481b3d0c3335c513e32b.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://sprites/place_holders/stars background.jpg"
-dest_files=[ "res://.import/stars background.jpg-14a1c545f6977db1b37e62f2bf76758b.s3tc.stex", "res://.import/stars background.jpg-14a1c545f6977db1b37e62f2bf76758b.etc2.stex" ]
+source_file="res://sprites/place_holders/stars_background.jpg"
+dest_files=[ "res://.import/stars_background.jpg-143243f9fc80481b3d0c3335c513e32b.s3tc.stex", "res://.import/stars_background.jpg-143243f9fc80481b3d0c3335c513e32b.etc2.stex" ]
 
 [params]
 
