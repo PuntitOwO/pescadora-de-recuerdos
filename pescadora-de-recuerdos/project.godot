@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scenes/enemies/enemies.gd"
+}, {
 "base": "TileMap",
 "class": "VoidTile",
 "language": "GDScript",
 "path": "res://scenes/danger/void_tilemap.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
 "VoidTile": ""
 }
 
