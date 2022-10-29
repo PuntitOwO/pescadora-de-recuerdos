@@ -1,13 +1,37 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/hook/hook.gd" type="Script" id=1]
 [ext_resource path="res://resources/sprites/hook/hook.png" type="Texture" id=2]
 [ext_resource path="res://resources/materials/grayscale.tres" type="Material" id=3]
 [ext_resource path="res://resources/sfx/hook_pull.wav" type="AudioStream" id=4]
 [ext_resource path="res://resources/sfx/hook_hurt.wav" type="AudioStream" id=5]
+[ext_resource path="res://resources/sprites/particles/bubbles_1.png" type="Texture" id=6]
+[ext_resource path="res://resources/sprites/particles/bubbles_2.png" type="Texture" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 21.0
+
+[sub_resource type="Curve" id=3]
+min_value = -1.0
+_data = [ Vector2( 0, 0.915909 ), 0.0, 0.0, 0, 0, Vector2( 0.808989, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+lifetime_randomness = 0.19
+emission_shape = 2
+emission_box_extents = Vector3( 20, 20, 1 )
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 50.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color = Color( 0.180392, 0.682353, 0.831373, 1 )
+hue_variation = 0.02
+hue_variation_random = 0.02
+hue_variation_curve = SubResource( 4 )
 
 [node name="Hook" type="KinematicBody2D" groups=["Hook"]]
 script = ExtResource( 1 )
@@ -31,3 +55,13 @@ stream = ExtResource( 5 )
 
 [node name="hook_pull" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="bubbles1" type="Particles2D" parent="."]
+local_coords = false
+process_material = SubResource( 2 )
+texture = ExtResource( 6 )
+
+[node name="bubbles2" type="Particles2D" parent="."]
+local_coords = false
+process_material = SubResource( 2 )
+texture = ExtResource( 7 )
