@@ -10,6 +10,9 @@ export var move_velocity = 200
 
 var velocity := Vector2.ZERO
 
+func _ready() -> void:
+	$Area2D.connect("body_entered", self, "_on_body_entered")
+
 func _physics_process(_delta: float) -> void:
 	if velocity.y < 0:
 		velocity.y += up_decceleration
@@ -27,3 +30,9 @@ func _physics_process(_delta: float) -> void:
 		velocity.x += move_velocity
 	velocity.x = clamp(velocity.x, -max_move_velocity, max_move_velocity)
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+func _on_body_entered(body:Node):
+	if body is VoidTile:
+		# take damage somehow
+		print("ouch")
+		pass
