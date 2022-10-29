@@ -1,6 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=2]
-
-[ext_resource path="res://sprites/place_holders/stars_squares.png" type="Texture" id=1]
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
 
 [sub_resource type="VisualShaderNodeTextureUniform" id=1]
 uniform_name = "Texture"
@@ -57,4 +55,3 @@ nodes/fragment/connections = PoolIntArray( 3, 0, 2, 0, 2, 0, 0, 0, 2, 1, 0, 1 )
 
 [resource]
 shader = SubResource( 3 )
-shader_param/Texture = ExtResource( 1 )

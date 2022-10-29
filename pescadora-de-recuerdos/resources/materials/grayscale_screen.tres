@@ -1,0 +1,53 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+uniform sampler2D Colormap : hint_albedo;
+
+void fragment() {
+// Get the fragment location
+	vec3 location = vec3(UV, 0.0);
+
+// Get the colors from the image at specified location
+	vec3 colorIn;
+	float alphaIn;
+	{
+		vec4 TEXTURE_tex_read = texture(SCREEN_TEXTURE, location.xy);
+		colorIn = TEXTURE_tex_read.rgb;
+		alphaIn = TEXTURE_tex_read.a;
+	}
+
+// get the greyscale value through the highest of r, g, and b
+	float grey;
+	{
+		vec3 c = colorIn;
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		grey = max2;
+	}
+
+// Read the colormap and use the greyscale value to map in the new color.
+	vec3 colorOut;
+	float alphaOut;
+	{
+		vec4 n_tex_read = texture(Colormap, vec2(grey, 0.0));
+		colorOut = n_tex_read.rgb;
+		alphaOut = n_tex_read.a;
+	}
+
+// Profit.
+	COLOR.rgb = colorOut;
+	COLOR.a = alphaIn;
+
+}"
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.111, 0.222, 0.333, 0.444, 0.556, 0.667, 0.778, 0.889 )
+colors = PoolColorArray( 0, 0.0392157, 0.0117647, 1, 0.0156863, 0.0470588, 0.0235294, 1, 0.0666667, 0.137255, 0.0941176, 1, 0.117647, 0.227451, 0.160784, 1, 0.188235, 0.364706, 0.258824, 1, 0.301961, 0.501961, 0.380392, 1, 0.537255, 0.635294, 0.341176, 1, 0.745098, 0.862745, 0.498039, 1, 0.933333, 1, 0.8, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[resource]
+shader = SubResource( 3 )
+shader_param/Colormap = SubResource( 5 )
