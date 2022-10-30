@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/levels/background_color.gd" type="Script" id=2]
@@ -14,7 +14,7 @@
 [ext_resource path="res://resources/sprites/backgrounds/background_2.png" type="Texture" id=12]
 [ext_resource path="res://resources/materials/level2palette.tres" type="Gradient" id=13]
 [ext_resource path="res://resources/sprites/character/character_2.png" type="Texture" id=14]
-[ext_resource path="res://resources/sprites/enemies/whale_spritesheet.png" type="Texture" id=15]
+[ext_resource path="res://scenes/enemies/jellyfish/jellyfish.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/levels/pregame_level1.gd" type="Script" id=16]
 [ext_resource path="res://scenes/enemies/whale/whale1.gd" type="Script" id=17]
 [ext_resource path="res://scenes/enemies/whale/whale.tscn" type="PackedScene" id=18]
@@ -69,23 +69,6 @@ resource_local_to_scene = true
 shader = SubResource( 22 )
 shader_param/Colormap = SubResource( 23 )
 
-[sub_resource type="Animation" id=1]
-resource_name = "swimming"
-length = 1.8
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
-}
-
 [sub_resource type="Animation" id=24]
 resource_name = "swimming"
 length = 1.8
@@ -120,7 +103,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="VisualShaderNodeTextureUniform" id=27]
+[sub_resource type="VisualShaderNodeTextureUniform" id=1]
 uniform_name = "Texture"
 
 [sub_resource type="VisualShaderNodeInput" id=2]
@@ -167,7 +150,7 @@ void light() {
 mode = 1
 flags/light_only = false
 flags/unshaded = true
-nodes/fragment/2/node = SubResource( 27 )
+nodes/fragment/2/node = SubResource( 1 )
 nodes/fragment/2/position = Vector2( -40, 140 )
 nodes/fragment/3/node = SubResource( 2 )
 nodes/fragment/3/position = Vector2( -320, 240 )
@@ -210,6 +193,851 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
+
+[sub_resource type="Shader" id=29]
+code = "shader_type canvas_item;
+uniform sampler2D Colormap : hint_albedo;
+
+void fragment() {
+// Get the fragment location
+	vec3 location = vec3(UV, 0.0);
+
+// Get the colors from the image at specified location
+	vec3 colorIn;
+	float alphaIn;
+	{
+		vec4 TEXTURE_tex_read = texture(TEXTURE, location.xy);
+		colorIn = TEXTURE_tex_read.rgb;
+		alphaIn = TEXTURE_tex_read.a;
+	}
+
+// get the greyscale value through the highest of r, g, and b
+	float grey;
+	{
+		vec3 c = colorIn;
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		grey = max2;
+	}
+
+// Read the colormap and use the greyscale value to map in the new color.
+	vec3 colorOut;
+	float alphaOut;
+	{
+		vec4 n_tex_read = texture(Colormap, vec2(grey, 0.0));
+		colorOut = n_tex_read.rgb;
+		alphaOut = n_tex_read.a;
+	}
+
+// Profit.
+	COLOR.rgb = colorOut;
+	COLOR.a = alphaIn;
+
+}"
+
+[sub_resource type="ShaderMaterial" id=33]
+resource_local_to_scene = true
+shader = SubResource( 29 )
+shader_param/Colormap = SubResource( 23 )
+
+[sub_resource type="Animation" id=38]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=39]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=40]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=41]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=42]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=43]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=44]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=45]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=46]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=80]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=34]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=35]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=36]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=37]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=47]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=48]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=49]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=50]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=51]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=52]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=53]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=54]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=55]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=56]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=57]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=58]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=59]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=60]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=61]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=62]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=63]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=64]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=65]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=66]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=67]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=68]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=69]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=70]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=71]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=72]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=73]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=74]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=75]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=76]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=77]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=78]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=79]
+resource_name = "jellyfish"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
 
 [sub_resource type="Shader" id=16]
 code = "shader_type canvas_item;
@@ -370,6 +1198,54 @@ tracks/4/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Boat:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 543, -370 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Character:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 483, -415 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Character:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3, 3 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("FishingRod:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 456, -391 ) ]
+}
 
 [sub_resource type="Animation" id=15]
 resource_name = "StartScene"
@@ -413,12 +1289,9 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 1.6, 5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [  ],
-"method": "_audio_play"
-}, {
 "args": [  ],
 "method": "_start_game"
 } ]
@@ -528,13 +1401,6 @@ script = ExtResource( 17 )
 [node name="Sprite" parent="Decorations/Whale1" index="0"]
 modulate = Color( 0.443137, 0.603922, 0.658824, 1 )
 material = SubResource( 26 )
-texture = ExtResource( 15 )
-hframes = 2
-
-[node name="AnimationPlayer" parent="Decorations/Whale1" index="1"]
-root_node = NodePath("../Sprite")
-autoplay = "swimming"
-anims/swimming = SubResource( 1 )
 
 [node name="Whale2" parent="Decorations" instance=ExtResource( 18 )]
 modulate = Color( 0.309804, 0.270588, 0.352941, 1 )
@@ -545,12 +1411,8 @@ script = ExtResource( 17 )
 [node name="Sprite" parent="Decorations/Whale2" index="0"]
 modulate = Color( 0.443137, 0.603922, 0.658824, 1 )
 material = SubResource( 26 )
-texture = ExtResource( 15 )
-hframes = 2
 
 [node name="AnimationPlayer" parent="Decorations/Whale2" index="1"]
-root_node = NodePath("../Sprite")
-autoplay = "swimming"
 anims/swimming = SubResource( 24 )
 
 [node name="Whale3" parent="Decorations" instance=ExtResource( 18 )]
@@ -562,20 +1424,468 @@ script = ExtResource( 17 )
 [node name="Sprite" parent="Decorations/Whale3" index="0"]
 modulate = Color( 0.443137, 0.603922, 0.658824, 1 )
 material = SubResource( 26 )
-texture = ExtResource( 15 )
-hframes = 2
 
 [node name="AnimationPlayer" parent="Decorations/Whale3" index="1"]
-root_node = NodePath("../Sprite")
-autoplay = "swimming"
 anims/swimming = SubResource( 25 )
 
 [node name="VoidTileMap" parent="." instance=ExtResource( 7 )]
 material = SubResource( 9 )
 tile_set = SubResource( 12 )
-tile_data = PoolIntArray( 1048588, 0, 0, 1114121, 0, 0, 1114122, 0, 0, 1114124, 0, 0, 1179656, 0, 0, 1179657, 0, 0, 1179658, 0, 0, 1179659, 0, 0, 1179660, 0, 0, 1245192, 0, 0, 1245193, 0, 0, 1245194, 0, 0, 1245195, 0, 0, 1245196, 0, 0, 1310728, 0, 0, 1310729, 0, 0, 1310730, 0, 0, 1310732, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376268, 0, 0, 1441804, 0, 0, 1507331, 0, 0, 1507340, 0, 0, 1572865, 0, 0, 1572866, 0, 0, 1572867, 0, 0, 1572868, 0, 0, 1572869, 0, 0, 1572876, 0, 0, 1638400, 0, 0, 1638401, 0, 0, 1638402, 0, 0, 1638403, 0, 0, 1638404, 0, 0, 1638405, 0, 0, 1638412, 0, 0, 1703936, 0, 0, 1703937, 0, 0, 1703938, 0, 0, 1703939, 0, 0, 1703940, 0, 0, 1703941, 0, 0, 1703942, 0, 0, 1703948, 0, 0, 1769473, 0, 0, 1769474, 0, 0, 1769475, 0, 0, 1769476, 0, 0, 1769477, 0, 0, 1769478, 0, 0, 1769484, 0, 0, 1835009, 0, 0, 1835010, 0, 0, 1835011, 0, 0, 1835020, 0, 0, 1900556, 0, 0, 1966092, 0, 0, 2031628, 0, 0, 2097164, 0, 0, 2162700, 0, 0, 2228236, 0, 0, 2293772, 0, 0, 2359308, 0, 0, 2424844, 0, 0, 2490380, 0, 0, 2555916, 0, 0, 2621452, 0, 0, 2686988, 0, 0, 2752524, 0, 0, 2818060, 0, 0, 2883596, 0, 0, 2949132, 0, 0, 3014668, 0, 0, 3080204, 0, 0, 3145740, 0, 0, 3211276, 0, 0, 3276812, 0, 0, 3342348, 0, 0, 3407884, 0, 0, 3473420, 0, 0, 3538956, 0, 0, 3604492, 0, 0, 3670028, 0, 0, 3735564, 0, 0, 3801100, 0, 0, 3866636, 0, 0, 3932172, 0, 0, 3997708, 0, 0, 4063244, 0, 0, 4128780, 0, 0, 4194316, 0, 0, 4259852, 0, 0, 4325388, 0, 0, 4390924, 0, 0, 4456460, 0, 0, 4521996, 0, 0, 4587532, 0, 0, 4653068, 0, 0, 4718604, 0, 0, 4784140, 0, 0, 4849676, 0, 0, 4915212, 0, 0, 4980748, 0, 0, 5046284, 0, 0, 5111820, 0, 0, 5177356, 0, 0, 5242892, 0, 0, 5308428, 0, 0, 5373964, 0, 0, 5439500, 0, 0, 5505036, 0, 0, 5570572, 0, 0, 5636108, 0, 0, 5701644, 0, 0 )
+tile_data = PoolIntArray( 1507339, 0, 0, 1572874, 0, 0, 1572875, 0, 0, 1638409, 0, 0, 1638410, 0, 0, 1638411, 0, 0, 1703945, 0, 0, 1703946, 0, 0, 1703947, 0, 0, 1769482, 0, 0, 1769483, 0, 0, 1835018, 0, 0, 1835019, 0, 0, 1900555, 0, 0, 1966080, 0, 0, 2031616, 0, 0, 2031617, 0, 0, 2097152, 0, 0, 2097153, 0, 0, 2097154, 0, 0, 2097155, 0, 0, 2162688, 0, 0, 2162689, 0, 0, 2162690, 0, 0, 2162691, 0, 0, 2228224, 0, 0, 2228225, 0, 0, 2228226, 0, 0, 2293760, 0, 0, 3211275, 0, 0, 3276800, 0, 0, 3276810, 0, 0, 3276811, 0, 0, 3342336, 0, 0, 3342337, 0, 0, 3342346, 0, 0, 3342347, 0, 0, 3407872, 0, 0, 3407873, 0, 0, 3407882, 0, 0, 3407883, 0, 0, 3473408, 0, 0, 3473409, 0, 0, 3473410, 0, 0, 3473418, 0, 0, 3473419, 0, 0, 3538944, 0, 0, 3538945, 0, 0, 3538946, 0, 0, 3538953, 0, 0, 3538954, 0, 0, 3538955, 0, 0, 3604480, 0, 0, 3604481, 0, 0, 3604482, 0, 0, 3604489, 0, 0, 3604490, 0, 0, 3604491, 0, 0, 3670016, 0, 0, 3670017, 0, 0, 3670025, 0, 0, 3670026, 0, 0, 3670027, 0, 0, 3735561, 0, 0, 3735562, 0, 0, 3735563, 0, 0, 3801097, 0, 0, 3801098, 0, 0, 3801099, 0, 0, 3866633, 0, 0, 3866634, 0, 0, 3866635, 0, 0, 3932169, 0, 0, 3932170, 0, 0, 3932171, 0, 0, 3997705, 0, 0, 3997706, 0, 0, 3997707, 0, 0, 4063241, 0, 0, 4063242, 0, 0, 4063243, 0, 0, 4128778, 0, 0, 4128779, 0, 0, 4194314, 0, 0, 4194315, 0, 0, 4259851, 0, 0, 4390912, 0, 0, 4456448, 0, 0, 4521984, 0, 0, 4521985, 0, 0, 4587520, 0, 0, 4587521, 0, 0, 4587522, 0, 0, 4587531, 0, 0, 4653056, 0, 0, 4653057, 0, 0, 4653058, 0, 0, 4653059, 0, 0, 4653060, 0, 0, 4653061, 0, 0, 4653062, 0, 0, 4653067, 0, 0, 4718592, 0, 0, 4718593, 0, 0, 4718594, 0, 0, 4718595, 0, 0, 4718596, 0, 0, 4718597, 0, 0, 4718598, 0, 0, 4718599, 0, 0, 4718600, 0, 0, 4718601, 0, 0, 4718602, 0, 0, 4718603, 0, 0, 4784128, 0, 0, 4784129, 0, 0, 4784130, 0, 0, 4784131, 0, 0, 4784132, 0, 0, 4784133, 0, 0, 4784134, 0, 0, 4784135, 0, 0, 4784136, 0, 0, 4784137, 0, 0, 4784138, 0, 0, 4784139, 0, 0, 4849664, 0, 0, 4849665, 0, 0, 4849666, 0, 0, 4849667, 0, 0, 4849668, 0, 0, 4849669, 0, 0, 4849670, 0, 0, 4849671, 0, 0, 4849672, 0, 0, 4849673, 0, 0, 4849674, 0, 0, 4849675, 0, 0, 4915200, 0, 0, 4915201, 0, 0, 4915202, 0, 0, 4915203, 0, 0, 4915204, 0, 0, 4915205, 0, 0, 4915206, 0, 0, 4915207, 0, 0, 4915208, 0, 0, 4915209, 0, 0, 4915210, 0, 0, 4915211, 0, 0, 4980736, 0, 0, 4980737, 0, 0, 4980738, 0, 0, 4980739, 0, 0, 4980740, 0, 0, 4980741, 0, 0, 4980742, 0, 0, 4980743, 0, 0, 4980744, 0, 0, 4980745, 0, 0, 4980746, 0, 0, 4980747, 0, 0, 5046272, 0, 0, 5046273, 0, 0, 5046274, 0, 0, 5046275, 0, 0, 5046276, 0, 0, 5046277, 0, 0, 5046278, 0, 0, 5046279, 0, 0, 5046280, 0, 0, 5046281, 0, 0, 5046282, 0, 0, 5046283, 0, 0, 5111808, 0, 0, 5111809, 0, 0, 5111810, 0, 0, 5111811, 0, 0, 5111812, 0, 0, 5111813, 0, 0, 5111814, 0, 0, 5111815, 0, 0, 5111816, 0, 0, 5111817, 0, 0, 5111818, 0, 0, 5111819, 0, 0, 5177344, 0, 0, 5177345, 0, 0, 5177346, 0, 0, 5177347, 0, 0, 5177348, 0, 0, 5177349, 0, 0, 5177350, 0, 0, 5177351, 0, 0, 5177352, 0, 0, 5177353, 0, 0, 5177354, 0, 0, 5177355, 0, 0, 5242880, 0, 0, 5242881, 0, 0, 5242882, 0, 0, 5242883, 0, 0, 5242884, 0, 0, 5242885, 0, 0, 5242886, 0, 0, 5242887, 0, 0, 5242888, 0, 0, 5242889, 0, 0, 5242890, 0, 0, 5242891, 0, 0, 5308416, 0, 0, 5308417, 0, 0, 5308418, 0, 0, 5308419, 0, 0, 5308420, 0, 0, 5308421, 0, 0, 5308422, 0, 0, 5308423, 0, 0, 5308424, 0, 0, 5308425, 0, 0, 5308426, 0, 0, 5308427, 0, 0, 5373952, 0, 0, 5373953, 0, 0, 5373954, 0, 0, 5373955, 0, 0, 5373956, 0, 0, 5373957, 0, 0, 5373958, 0, 0, 5373959, 0, 0, 5373960, 0, 0, 5373961, 0, 0, 5373962, 0, 0, 5373963, 0, 0, 5439488, 0, 0, 5439489, 0, 0, 5439490, 0, 0, 5439491, 0, 0, 5439492, 0, 0, 5439493, 0, 0, 5439494, 0, 0, 5439495, 0, 0, 5439496, 0, 0, 5439497, 0, 0, 5439498, 0, 0, 5439499, 0, 0, 5505024, 0, 0, 5505025, 0, 0, 5505026, 0, 0, 5505027, 0, 0, 5505028, 0, 0, 5505029, 0, 0, 5505030, 0, 0, 5505031, 0, 0, 5505032, 0, 0, 5505033, 0, 0, 5505034, 0, 0, 5505035, 0, 0, 5570560, 0, 0, 5570561, 0, 0, 5570562, 0, 0, 5570563, 0, 0, 5570564, 0, 0, 5570565, 0, 0, 5570566, 0, 0, 5570567, 0, 0, 5570568, 0, 0, 5570569, 0, 0, 5570570, 0, 0, 5570571, 0, 0, 5636096, 0, 0, 5636097, 0, 0, 5636098, 0, 0, 5636099, 0, 0, 5636100, 0, 0, 5636101, 0, 0, 5636102, 0, 0, 5636103, 0, 0, 5636104, 0, 0, 5636105, 0, 0, 5636106, 0, 0, 5636107, 0, 0 )
 
 [node name="Enemies" type="Node2D" parent="."]
+position = Vector2( -2, 0 )
+
+[node name="jelly_cluster1" type="Node2D" parent="Enemies"]
+
+[node name="Jellyfish1_1" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 220, 1723 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_1" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_1" index="1"]
+anims/jellyfish = SubResource( 38 )
+
+[node name="Jellyfish1_2" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 69, 1694 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_2" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_2" index="1"]
+anims/jellyfish = SubResource( 39 )
+
+[node name="Jellyfish1_3" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 185, 1603 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_3" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_3" index="1"]
+anims/jellyfish = SubResource( 40 )
+
+[node name="Jellyfish1_4" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 110, 1554 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_4" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_4" index="1"]
+anims/jellyfish = SubResource( 41 )
+
+[node name="Jellyfish1_5" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 139, 1810 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_5" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_5" index="1"]
+anims/jellyfish = SubResource( 42 )
+
+[node name="Jellyfish1_6" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 206, 1467 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_6" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_6" index="1"]
+anims/jellyfish = SubResource( 43 )
+
+[node name="Jellyfish1_7" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 280, 1840 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_7" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_7" index="1"]
+anims/jellyfish = SubResource( 44 )
+
+[node name="Jellyfish1_8" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 356, 1660 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_8" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_8" index="1"]
+anims/jellyfish = SubResource( 45 )
+
+[node name="Jellyfish1_9" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 300, 1523 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_9" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_9" index="1"]
+anims/jellyfish = SubResource( 46 )
+
+[node name="Jellyfish1_10" parent="Enemies/jelly_cluster1" instance=ExtResource( 15 )]
+position = Vector2( 300, 1523 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster1/Jellyfish1_10" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster1/Jellyfish1_10" index="1"]
+anims/jellyfish = SubResource( 80 )
+
+[node name="jelly_cluster2" type="Node2D" parent="Enemies"]
+
+[node name="Jellyfish2_1" parent="Enemies/jelly_cluster2" instance=ExtResource( 15 )]
+position = Vector2( 623, 1356 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster2/Jellyfish2_1" index="0"]
+material = SubResource( 33 )
+
+[node name="Jellyfish2_2" parent="Enemies/jelly_cluster2" instance=ExtResource( 15 )]
+position = Vector2( 630, 1158 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster2/Jellyfish2_2" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster2/Jellyfish2_2" index="1"]
+anims/jellyfish = SubResource( 34 )
+
+[node name="Jellyfish2_3" parent="Enemies/jelly_cluster2" instance=ExtResource( 15 )]
+position = Vector2( 723, 1185 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster2/Jellyfish2_3" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster2/Jellyfish2_3" index="1"]
+anims/jellyfish = SubResource( 35 )
+
+[node name="Jellyfish2_4" parent="Enemies/jelly_cluster2" instance=ExtResource( 15 )]
+position = Vector2( 556, 1237 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster2/Jellyfish2_4" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster2/Jellyfish2_4" index="1"]
+anims/jellyfish = SubResource( 36 )
+
+[node name="Jellyfish2_5" parent="Enemies/jelly_cluster2" instance=ExtResource( 15 )]
+position = Vector2( 681, 1297 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster2/Jellyfish2_5" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster2/Jellyfish2_5" index="1"]
+anims/jellyfish = SubResource( 37 )
+
+[node name="jelly_cluster3" type="Node2D" parent="Enemies"]
+position = Vector2( 0, -2 )
+
+[node name="Jellyfish3_1" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 716, 2175 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_1" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_1" index="1"]
+anims/jellyfish = SubResource( 47 )
+
+[node name="Jellyfish3_2" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 589, 2188 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_2" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_2" index="1"]
+anims/jellyfish = SubResource( 48 )
+
+[node name="Jellyfish3_3" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 716, 2383 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_3" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_3" index="1"]
+anims/jellyfish = SubResource( 49 )
+
+[node name="Jellyfish3_4" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 510, 2374 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_4" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_4" index="1"]
+anims/jellyfish = SubResource( 50 )
+
+[node name="Jellyfish3_5" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 628, 2310 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_5" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_5" index="1"]
+anims/jellyfish = SubResource( 51 )
+
+[node name="Jellyfish3_6" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 625, 2462 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_6" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_6" index="1"]
+anims/jellyfish = SubResource( 52 )
+
+[node name="Jellyfish3_7" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 753, 2646 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_7" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_7" index="1"]
+anims/jellyfish = SubResource( 53 )
+
+[node name="Jellyfish3_8" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 398, 2499 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_8" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_8" index="1"]
+anims/jellyfish = SubResource( 54 )
+
+[node name="Jellyfish3_9" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 504, 2766 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_9" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_9" index="1"]
+anims/jellyfish = SubResource( 55 )
+
+[node name="Jellyfish3_10" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 520, 2560 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_10" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_10" index="1"]
+anims/jellyfish = SubResource( 56 )
+
+[node name="Jellyfish3_11" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 608, 2651 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_11" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_11" index="1"]
+anims/jellyfish = SubResource( 57 )
+
+[node name="Jellyfish3_12" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 718, 2815 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_12" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_12" index="1"]
+anims/jellyfish = SubResource( 58 )
+
+[node name="Jellyfish3_13" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 412, 2623 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_13" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_13" index="1"]
+anims/jellyfish = SubResource( 59 )
+
+[node name="Jellyfish3_14" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 347, 2815 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_14" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_14" index="1"]
+anims/jellyfish = SubResource( 60 )
+
+[node name="Jellyfish3_15" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 695, 2971 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_15" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_15" index="1"]
+anims/jellyfish = SubResource( 61 )
+
+[node name="Jellyfish3_16" parent="Enemies/jelly_cluster3" instance=ExtResource( 15 )]
+position = Vector2( 460, 2985 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster3/Jellyfish3_16" index="0"]
+material = SubResource( 33 )
+frame = 0
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster3/Jellyfish3_16" index="1"]
+anims/jellyfish = SubResource( 62 )
+
+[node name="jelly_cluster4" type="Node2D" parent="Enemies"]
+position = Vector2( -482, 2569 )
+
+[node name="Jellyfish4_1" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 623, 1356 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_1" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_1" index="1"]
+anims/jellyfish = SubResource( 63 )
+
+[node name="Jellyfish4_2" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 630, 1158 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_2" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_2" index="1"]
+anims/jellyfish = SubResource( 64 )
+
+[node name="Jellyfish4_3" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 723, 1185 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_3" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_3" index="1"]
+anims/jellyfish = SubResource( 65 )
+
+[node name="Jellyfish4_4" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 556, 1237 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_4" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_4" index="1"]
+anims/jellyfish = SubResource( 66 )
+
+[node name="Jellyfish4_5" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 656, 1267 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_5" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_5" index="1"]
+anims/jellyfish = SubResource( 67 )
+
+[node name="Jellyfish4_6" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 519, 1124 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_6" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_6" index="1"]
+anims/jellyfish = SubResource( 68 )
+
+[node name="Jellyfish4_7" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 535, 1410 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_7" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_7" index="1"]
+anims/jellyfish = SubResource( 69 )
+
+[node name="Jellyfish4_8" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 703, 1052 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_8" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_8" index="1"]
+anims/jellyfish = SubResource( 70 )
+
+[node name="Jellyfish4_9" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 703, 1052 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_9" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_9" index="1"]
+anims/jellyfish = SubResource( 71 )
+
+[node name="Jellyfish4_10" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 547, 1542 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_10" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_10" index="1"]
+anims/jellyfish = SubResource( 72 )
+
+[node name="Jellyfish4_11" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 775, 1112 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_11" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_11" index="1"]
+anims/jellyfish = SubResource( 73 )
+
+[node name="Jellyfish4_12" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 649, 1526 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_12" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_12" index="1"]
+anims/jellyfish = SubResource( 74 )
+
+[node name="Jellyfish4_13" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 589, 1672 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_13" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_13" index="1"]
+anims/jellyfish = SubResource( 75 )
+
+[node name="Jellyfish4_14" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 769, 1292 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_14" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_14" index="1"]
+anims/jellyfish = SubResource( 76 )
+
+[node name="Jellyfish4_15" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 763, 1412 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_15" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_15" index="1"]
+anims/jellyfish = SubResource( 77 )
+
+[node name="Jellyfish4_16" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 633, 1788 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_16" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_16" index="1"]
+anims/jellyfish = SubResource( 78 )
+
+[node name="Jellyfish4_17" parent="Enemies/jelly_cluster4" instance=ExtResource( 15 )]
+position = Vector2( 721, 1630 )
+
+[node name="Sprite" parent="Enemies/jelly_cluster4/Jellyfish4_17" index="0"]
+material = SubResource( 33 )
+
+[node name="AnimationPlayer" parent="Enemies/jelly_cluster4/Jellyfish4_17" index="1"]
+anims/jellyfish = SubResource( 79 )
 
 [node name="Collectables" type="Node2D" parent="."]
 
@@ -711,4 +2021,52 @@ position = Vector2( 0, 3200 )
 [editable path="Decorations/Whale1"]
 [editable path="Decorations/Whale2"]
 [editable path="Decorations/Whale3"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_1"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_2"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_3"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_4"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_5"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_6"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_7"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_8"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_9"]
+[editable path="Enemies/jelly_cluster1/Jellyfish1_10"]
+[editable path="Enemies/jelly_cluster2/Jellyfish2_1"]
+[editable path="Enemies/jelly_cluster2/Jellyfish2_2"]
+[editable path="Enemies/jelly_cluster2/Jellyfish2_3"]
+[editable path="Enemies/jelly_cluster2/Jellyfish2_4"]
+[editable path="Enemies/jelly_cluster2/Jellyfish2_5"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_1"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_2"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_3"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_4"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_5"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_6"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_7"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_8"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_9"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_10"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_11"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_12"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_13"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_14"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_15"]
+[editable path="Enemies/jelly_cluster3/Jellyfish3_16"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_1"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_2"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_3"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_4"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_5"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_6"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_7"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_8"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_9"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_10"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_11"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_12"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_13"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_14"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_15"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_16"]
+[editable path="Enemies/jelly_cluster4/Jellyfish4_17"]
 [editable path="Hook"]

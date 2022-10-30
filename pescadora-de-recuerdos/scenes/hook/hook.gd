@@ -60,7 +60,7 @@ func _physics_process(_delta: float) -> void:
 			_collected(collision.collider, image_index, next_level)
 			return
 			
-		if collision.collider is VoidTile:
+		if collision.collider is VoidTile or Enemy:
 			var knockback_direction = collision.position.direction_to(global_position)
 			_knockback(knockback_direction)
 

@@ -20,4 +20,3 @@ func _process(delta):
 	var direction = (player_pos - init_pos) / sqrt(pow(player_pos[0]-init_pos[0],2)+pow(player_pos[1]-init_pos[1],2))
 	position.x +=  direction[0]*speed
 	position.y += direction[1]*speed
-#	pass
