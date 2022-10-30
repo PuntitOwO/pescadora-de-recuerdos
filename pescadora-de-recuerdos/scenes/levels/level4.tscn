@@ -469,14 +469,15 @@ tile_data = PoolIntArray( 917504, 0, 0, 917515, 0, 0, 983040, 0, 0, 983051, 0, 0
 
 [node name="Object" parent="Collectables" instance=ExtResource( 10 )]
 position = Vector2( 624, 1946 )
+image_index = 9
 
 [node name="Object2" parent="Collectables" instance=ExtResource( 10 )]
 position = Vector2( 120, 2402 )
-image_index = 1
+image_index = 10
 
 [node name="Object3" parent="Collectables" instance=ExtResource( 10 )]
 position = Vector2( 120, 2402 )
-image_index = 2
+image_index = 11
 next_level = true
 
 [node name="Hook" parent="." instance=ExtResource( 5 )]
