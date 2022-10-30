@@ -29,6 +29,7 @@ script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 2 )
+position = Vector2( 18, -15 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
 hframes = 4
@@ -40,7 +41,7 @@ reset_on_save = false
 anims/blob1 = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -3, -2 )
+position = Vector2( 1, 0 )
 scale = Vector2( 1.23826, 1 )
 shape = SubResource( 3 )
 
