@@ -1,19 +1,14 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://scenes/levels/background_color.gd" type="Script" id=2]
-[ext_resource path="res://resources/materials/level1palette.tres" type="Texture" id=3]
+[ext_resource path="res://scenes/levels/credits.gd" type="Script" id=2]
 [ext_resource path="res://scenes/character/fishing_rod.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/hook/hook.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resources/materials/screenspace_viewport.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/danger/void_tilemap.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/fishing_line/fishing_line.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/hook/hook_camera.gd" type="Script" id=9]
 [ext_resource path="res://resources/sprites/character/character_4.png" type="Texture" id=11]
 [ext_resource path="res://resources/sprites/character/boat.png" type="Texture" id=12]
-[ext_resource path="res://resources/materials/grayscale.tres" type="Material" id=13]
-[ext_resource path="res://resources/sprites/backgrounds/background_1.png" type="Texture" id=15]
-[ext_resource path="res://scenes/levels/pregame_level1.gd" type="Script" id=16]
+[ext_resource path="res://resources/sprites/backgrounds/background_4.png" type="Texture" id=13]
+[ext_resource path="res://resources/sfx/water_splash.wav" type="AudioStream" id=19]
 
 [sub_resource type="VisualShaderNodeTextureUniform" id=1]
 uniform_name = "Texture"
@@ -106,7 +101,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 } ]
 0/z_index = 0
 
-[sub_resource type="Shader" id=16]
+[sub_resource type="Shader" id=22]
 code = "shader_type canvas_item;
 uniform sampler2D Colormap : hint_albedo;
 
@@ -147,19 +142,17 @@ void fragment() {
 
 }"
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="Gradient" id=24]
+offsets = PoolRealArray( 0, 0.311224, 0.729592, 1 )
+colors = PoolColorArray( 0.239216, 0.0235294, 0.141176, 1, 0.270588, 0.239216, 0.662745, 1, 0.917647, 0.517647, 0.560784, 1, 0.976471, 0.898039, 0.686275, 1 )
+
+[sub_resource type="GradientTexture" id=25]
+gradient = SubResource( 24 )
+
+[sub_resource type="ShaderMaterial" id=23]
 resource_local_to_scene = true
-shader = SubResource( 16 )
-shader_param/Colormap = ExtResource( 3 )
-
-[sub_resource type="CircleShape2D" id=13]
-radius = 21.0
-
-[sub_resource type="RectangleShape2D" id=18]
-extents = Vector2( 32, 512 )
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 448, 32 )
+shader = SubResource( 22 )
+shader_param/Colormap = SubResource( 25 )
 
 [sub_resource type="Animation" id=14]
 length = 0.001
@@ -184,7 +177,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 )
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../../Camera2D:current")
+tracks/2/path = NodePath("Line2D:points")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -193,10 +186,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ PoolVector2Array( 384, -400, 384, -22 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Line2D:points")
+tracks/3/path = NodePath("Line2D:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -205,10 +198,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ PoolVector2Array( 384, -400, 384, -22 ) ]
+"values": [ false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Line2D:visible")
+tracks/4/path = NodePath("Boat:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -217,10 +210,10 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Vector2( 543, -370 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Boat:position")
+tracks/5/path = NodePath("Character:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -229,10 +222,10 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 543, -370 ) ]
+"values": [ Vector2( 483, -415 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Character:position")
+tracks/6/path = NodePath("Character:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -241,10 +234,10 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 483, -415 ) ]
+"values": [ Vector2( 3, 3 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Character:scale")
+tracks/7/path = NodePath("FishingRod:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -253,19 +246,147 @@ tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3, 3 ) ]
+"values": [ Vector2( 456, -391 ) ]
 }
-tracks/8/type = "value"
-tracks/8/path = NodePath("FishingRod:position")
+tracks/8/type = "bezier"
+tracks/8/path = NodePath("Label:rect_position:x")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 456, -391 ) ]
+"points": PoolRealArray( 51, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/9/type = "bezier"
+tracks/9/path = NodePath("Label:rect_position:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/10/type = "bezier"
+tracks/10/path = NodePath("Label2:rect_position:x")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"points": PoolRealArray( 51, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/11/type = "bezier"
+tracks/11/path = NodePath("Label2:rect_position:y")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/12/type = "bezier"
+tracks/12/path = NodePath("Label3:rect_position:y")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/13/type = "bezier"
+tracks/13/path = NodePath("Label3:rect_position:x")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"points": PoolRealArray( 51, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/14/type = "bezier"
+tracks/14/path = NodePath("Label4:rect_position:x")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"points": PoolRealArray( 12, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/15/type = "bezier"
+tracks/15/path = NodePath("Label4:rect_position:y")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/16/type = "bezier"
+tracks/16/path = NodePath("Label5:rect_position:x")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"points": PoolRealArray( 51, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/17/type = "bezier"
+tracks/17/path = NodePath("Label5:rect_position:y")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/18/type = "bezier"
+tracks/18/path = NodePath(".:modulate:r")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/19/type = "bezier"
+tracks/19/path = NodePath(".:modulate:g")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/20/type = "bezier"
+tracks/20/path = NodePath(".:modulate:b")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/21/type = "bezier"
+tracks/21/path = NodePath(".:modulate:a")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=15]
@@ -291,25 +412,13 @@ tracks/1/keys = {
 "points": PoolRealArray( -512, -0.25, 0, 1, -5.17896, 512, -1, -12.7434, 0.25, 0 ),
 "times": PoolRealArray( 2.5, 5 )
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("../../Camera2D:current")
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
 "times": PoolRealArray( 5 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -317,13 +426,13 @@ tracks/3/keys = {
 "method": "_start_game"
 } ]
 }
-tracks/4/type = "method"
-tracks/4/path = NodePath("FishingRod")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
+tracks/3/type = "method"
+tracks/3/path = NodePath("FishingRod")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -331,25 +440,25 @@ tracks/4/keys = {
 "method": "start_animation"
 } ]
 }
-tracks/5/type = "value"
-tracks/5/path = NodePath("Line2D:points")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
+tracks/4/type = "value"
+tracks/4/path = NodePath("Line2D:points")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
 "times": PoolRealArray( 0, 1.6, 2.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ PoolVector2Array( 384, -400, 384, -400 ), PoolVector2Array( 384, -400, 384, -400 ), PoolVector2Array( 384, -400, 384, 0 ) ]
 }
-tracks/6/type = "value"
-tracks/6/path = NodePath("Line2D:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
+tracks/5/type = "value"
+tracks/5/path = NodePath("Line2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -357,9 +466,8 @@ tracks/6/keys = {
 }
 
 [sub_resource type="Animation" id=19]
-resource_name = "idle"
-length = 16.0
-loop = true
+resource_name = "credits"
+length = 60.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Boat:position")
 tracks/0/interp = 1
@@ -367,10 +475,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 4, 6, 8, 10, 12, 14 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ) ]
+"values": [ Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ), Vector2( 543, -370 ), Vector2( 543, -367 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Character:position")
@@ -379,10 +487,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.2, 2.3, 4.2, 6.3, 8.2, 10.3, 12.2, 14.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0.2, 2.3, 4.2, 6.3, 8.2, 10.3, 12.2, 14.3, 16.3, 18.4, 20.3, 22.4, 24.3, 26.4, 28.3, 30.4, 32.2, 34.3, 36.2, 38.3, 40.2, 42.3, 44.2, 46.3, 48.2, 50.3, 52.2, 54.3, 56.2, 58.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ) ]
+"values": [ Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ), Vector2( 483, -415 ), Vector2( 483, -412 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Character:scale")
@@ -391,10 +499,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 10.5, 12.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 10.5, 12.5, 22.5, 24.5, 40.5, 42.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 3, 3 ), Vector2( -3, 3 ), Vector2( 3, 3 ) ]
+"values": [ Vector2( 3, 3 ), Vector2( -3, 3 ), Vector2( 3, 3 ), Vector2( -3, 3 ), Vector2( 3, 3 ), Vector2( -3, 3 ), Vector2( 3, 3 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("FishingRod:position")
@@ -403,112 +511,246 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.2, 2.3, 4.2, 6.3, 8.2, 10.3, 12.2, 14.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0.2, 2.3, 4.2, 6.3, 8.2, 10.3, 12.2, 14.3, 16.3, 18.4, 20.3, 22.4, 24.3, 26.4, 28.3, 30.4, 32.2, 34.3, 36.2, 38.3, 40.2, 42.3, 44.2, 46.3, 48.2, 50.3, 52.2, 54.3, 56.2, 58.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ) ]
+"values": [ Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ), Vector2( 456, -391 ), Vector2( 456, -388 ) ]
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("PreGameCamera:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 384, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("PreGameCamera:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( -512, -0.25, 0, 0.25, 0, -512, -0.25, 0, 0.25, 0, -768, -0.25, 0, 0.25, 0, -768, -0.25, 0, 0.25, 0, -1140, -0.25, 0, 0.25, 0, -1140, -0.25, 0, 0.25, 0, -512, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5, 10, 32.5, 35, 37.5, 40 )
+}
+tracks/6/type = "bezier"
+tracks/6/path = NodePath("Label:rect_position:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"points": PoolRealArray( 51, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 12.5 )
+}
+tracks/7/type = "bezier"
+tracks/7/path = NodePath("Label:rect_position:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0, -1270, -0.25, 0, 0.25, 0, -2000, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 12.5, 20 )
+}
+tracks/8/type = "bezier"
+tracks/8/path = NodePath("Label2:rect_position:x")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"points": PoolRealArray( -300, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0, 800, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 15, 17.5, 25, 27.5 )
+}
+tracks/9/type = "bezier"
+tracks/9/path = NodePath("Label2:rect_position:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 10 )
+}
+tracks/10/type = "bezier"
+tracks/10/path = NodePath("Label3:rect_position:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 10 )
+}
+tracks/11/type = "bezier"
+tracks/11/path = NodePath("Label3:rect_position:x")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"points": PoolRealArray( -711, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0, 768, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 15, 17.5, 20, 22.5 )
+}
+tracks/12/type = "bezier"
+tracks/12/path = NodePath("Label4:rect_position:x")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"points": PoolRealArray( -768, -0.25, 0, 0.25, 0, 12, -0.25, 0, 0.25, 0, 12, -0.25, 0, 0.25, 0, 768, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 20, 22.5, 25, 27.5 )
+}
+tracks/13/type = "bezier"
+tracks/13/path = NodePath("Label4:rect_position:y")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 10 )
+}
+tracks/14/type = "bezier"
+tracks/14/path = NodePath("Label5:rect_position:x")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"points": PoolRealArray( -768, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0, 51, -0.25, 0, 0.25, 0, 800, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 25, 27.5, 30, 32.5 )
+}
+tracks/15/type = "bezier"
+tracks/15/path = NodePath("Label5:rect_position:y")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"points": PoolRealArray( -1270, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 27.5 )
+}
+tracks/16/type = "bezier"
+tracks/16/path = NodePath("Label6:rect_position:x")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/17/type = "bezier"
+tracks/17/path = NodePath("Label6:rect_position:y")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/18/type = "bezier"
+tracks/18/path = NodePath("Label7:rect_position:x")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/19/type = "bezier"
+tracks/19/path = NodePath("Label7:rect_position:y")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/20/type = "bezier"
+tracks/20/path = NodePath("Label8:rect_position:x")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/21/type = "bezier"
+tracks/21/path = NodePath("Label8:rect_position:y")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/22/type = "bezier"
+tracks/22/path = NodePath(".:modulate:r")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 40, 45 )
+}
+tracks/23/type = "bezier"
+tracks/23/path = NodePath(".:modulate:g")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 40, 45 )
+}
+tracks/24/type = "bezier"
+tracks/24/path = NodePath(".:modulate:b")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 40, 45 )
+}
+tracks/25/type = "bezier"
+tracks/25/path = NodePath(".:modulate:a")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 40, 45 )
 }
 
-[sub_resource type="Shader" id=20]
-code = "shader_type canvas_item;
-uniform sampler2D Colormap : hint_albedo;
+[sub_resource type="DynamicFontData" id=26]
+antialiased = false
+font_path = "res://resources/font/Redaction50-Regular.otf"
 
-void fragment() {
-// Get the fragment location
-	vec3 location = vec3(UV, 0.0);
+[sub_resource type="DynamicFont" id=27]
+size = 50
+font_data = SubResource( 26 )
 
-// Get the colors from the image at specified location
-	vec3 colorIn;
-	float alphaIn;
-	{
-		vec4 TEXTURE_tex_read = texture(TEXTURE, location.xy);
-		colorIn = TEXTURE_tex_read.rgb;
-		alphaIn = TEXTURE_tex_read.a;
-	}
-
-// get the greyscale value through the highest of r, g, and b
-	float grey;
-	{
-		vec3 c = colorIn;
-		float max1 = max(c.r, c.g);
-		float max2 = max(max1, c.b);
-		grey = max2;
-	}
-
-// Read the colormap and use the greyscale value to map in the new color.
-	vec3 colorOut;
-	float alphaOut;
-	{
-		vec4 n_tex_read = texture(Colormap, vec2(grey, 0.0));
-		colorOut = n_tex_read.rgb;
-		alphaOut = n_tex_read.a;
-	}
-
-// Profit.
-	COLOR.rgb = colorOut;
-	COLOR.a = alphaIn;
-
-}"
-
-[sub_resource type="ShaderMaterial" id=21]
-resource_local_to_scene = true
-shader = SubResource( 20 )
-shader_param/Colormap = ExtResource( 3 )
-
-[node name="Credits" type="Node2D"]
+[node name="Level4" type="Node2D"]
 
 [node name="VoidTileMap" parent="." instance=ExtResource( 7 )]
 material = SubResource( 9 )
 tile_set = SubResource( 12 )
-collision_layer = 0
-tile_data = PoolIntArray( 917504, 0, 0, 917515, 0, 0, 983040, 0, 0, 983051, 0, 0, 1048576, 0, 0, 1048587, 0, 0, 1114112, 0, 0, 1114113, 0, 0, 1114122, 0, 0, 1114123, 0, 0, 1179648, 0, 0, 1179649, 0, 0, 1179650, 0, 0, 1179657, 0, 0, 1179658, 0, 0, 1179659, 0, 0, 1245184, 0, 0, 1245185, 0, 0, 1245186, 0, 0, 1245193, 0, 0, 1245194, 0, 0, 1245195, 0, 0, 1310720, 0, 0, 1310721, 0, 0, 1310722, 0, 0, 1310728, 0, 0, 1310729, 0, 0, 1310730, 0, 0, 1310731, 0, 0, 1376256, 0, 0, 1376257, 0, 0, 1376258, 0, 0, 1376263, 0, 0, 1376264, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376267, 0, 0, 1441792, 0, 0, 1441793, 0, 0, 1441794, 0, 0, 1441802, 0, 0, 1441803, 0, 0, 1507328, 0, 0, 1507329, 0, 0, 1507330, 0, 0, 1507339, 0, 0, 1572864, 0, 0, 1572865, 0, 0, 1572866, 0, 0, 1572875, 0, 0, 1638400, 0, 0, 1638401, 0, 0, 1638402, 0, 0, 1638403, 0, 0, 1638411, 0, 0, 1703936, 0, 0, 1703937, 0, 0, 1703938, 0, 0, 1703939, 0, 0, 1703940, 0, 0, 1703947, 0, 0, 1769472, 0, 0, 1769473, 0, 0, 1769474, 0, 0, 1769475, 0, 0, 1769476, 0, 0, 1769477, 0, 0, 1769478, 0, 0, 1769479, 0, 0, 1769483, 0, 0, 1835008, 0, 0, 1835009, 0, 0, 1835010, 0, 0, 1835011, 0, 0, 1835012, 0, 0, 1835013, 0, 0, 1835014, 0, 0, 1835015, 0, 0, 1835019, 0, 0, 1900544, 0, 0, 1900545, 0, 0, 1900546, 0, 0, 1900547, 0, 0, 1900548, 0, 0, 1900549, 0, 0, 1900550, 0, 0, 1900551, 0, 0, 1900555, 0, 0, 1966080, 0, 0, 1966081, 0, 0, 1966082, 0, 0, 1966083, 0, 0, 1966084, 0, 0, 1966085, 0, 0, 1966086, 0, 0, 1966087, 0, 0, 1966091, 0, 0, 2031616, 0, 0, 2031617, 0, 0, 2031620, 0, 0, 2031621, 0, 0, 2031622, 0, 0, 2031623, 0, 0, 2031627, 0, 0, 2097152, 0, 0, 2097157, 0, 0, 2097158, 0, 0, 2097159, 0, 0, 2097163, 0, 0, 2162688, 0, 0, 2162695, 0, 0, 2162699, 0, 0, 2228224, 0, 0, 2228235, 0, 0, 2293760, 0, 0, 2293763, 0, 0, 2293771, 0, 0, 2359296, 0, 0, 2359299, 0, 0, 2359300, 0, 0, 2359307, 0, 0, 2424832, 0, 0, 2424835, 0, 0, 2424836, 0, 0, 2424837, 0, 0, 2424843, 0, 0, 2490368, 0, 0, 2490371, 0, 0, 2490372, 0, 0, 2490373, 0, 0, 2490374, 0, 0, 2490379, 0, 0, 2555904, 0, 0, 2555908, 0, 0, 2555909, 0, 0, 2555910, 0, 0, 2555911, 0, 0, 2555912, 0, 0, 2555913, 0, 0, 2555914, 0, 0, 2555915, 0, 0, 2621440, 0, 0, 2621451, 0, 0, 2686976, 0, 0, 2686987, 0, 0, 2752512, 0, 0, 2752513, 0, 0, 2752523, 0, 0, 2818048, 0, 0, 2818049, 0, 0, 2818050, 0, 0, 2818056, 0, 0, 2818059, 0, 0, 2883584, 0, 0, 2883585, 0, 0, 2883586, 0, 0, 2883587, 0, 0, 2883588, 0, 0, 2883589, 0, 0, 2883590, 0, 0, 2883591, 0, 0, 2883592, 0, 0, 2883595, 0, 0, 2949131, 0, 0, 3014667, 0, 0, 3080203, 0, 0, 3145739, 0, 0 )
-
-[node name="Hook" parent="." instance=ExtResource( 5 )]
-position = Vector2( 384, 512 )
-
-[node name="Sprite" parent="Hook" index="0"]
-material = SubResource( 17 )
-
-[node name="CollisionShape2D" parent="Hook" index="1"]
-shape = SubResource( 13 )
-
-[node name="FishingLine" parent="." instance=ExtResource( 8 )]
-end_node_attached_path = NodePath("../Hook/LinePosition")
-start_node_attached_path = NodePath("../Camera2D/Position2D")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 384, 512 )
-limit_left = 0
-limit_top = 0
-limit_right = 768
-smoothing_enabled = true
-drag_margin_left = 1.0
-drag_margin_top = 0.0
-drag_margin_right = 1.0
-drag_margin_bottom = 0.0
-editor_draw_drag_margin = true
-script = ExtResource( 9 )
-target_path = NodePath("../Hook")
-
-[node name="Position2D" type="Position2D" parent="Camera2D"]
-position = Vector2( 384, -704 )
-
-[node name="LimitsX" type="StaticBody2D" parent="Camera2D"]
-position = Vector2( 0, -544 )
-
-[node name="CollisionLeft" type="CollisionShape2D" parent="Camera2D/LimitsX"]
-position = Vector2( -416, 544 )
-shape = SubResource( 18 )
-
-[node name="CollisionRight" type="CollisionShape2D" parent="Camera2D/LimitsX"]
-position = Vector2( 416, 544 )
-shape = SubResource( 18 )
-
-[node name="UpperLimit" type="StaticBody2D" parent="."]
-position = Vector2( 384, -32 )
-
-[node name="CollisionUp" type="CollisionShape2D" parent="UpperLimit"]
-shape = SubResource( 7 )
+tile_data = PoolIntArray( -1703936, 0, 0, -1703935, 0, 0, -1703934, 0, 0, -1703933, 0, 0, -1703932, 0, 0, -1703931, 0, 0, -1703930, 0, 0, -1703929, 0, 0, -1703928, 0, 0, -1703927, 0, 0, -1703926, 0, 0, -1703925, 0, 0, -1638400, 0, 0, -1638399, 0, 0, -1638398, 0, 0, -1638397, 0, 0, -1638396, 0, 0, -1638395, 0, 0, -1638394, 0, 0, -1638393, 0, 0, -1638392, 0, 0, -1638391, 0, 0, -1638390, 0, 0, -1638389, 0, 0, -1572864, 0, 0, -1572863, 0, 0, -1572862, 0, 0, -1572861, 0, 0, -1572860, 0, 0, -1572859, 0, 0, -1572858, 0, 0, -1572857, 0, 0, -1572856, 0, 0, -1572855, 0, 0, -1572854, 0, 0, -1572853, 0, 0, -1507328, 0, 0, -1507327, 0, 0, -1507326, 0, 0, -1507325, 0, 0, -1507324, 0, 0, -1507323, 0, 0, -1507322, 0, 0, -1507321, 0, 0, -1507320, 0, 0, -1507319, 0, 0, -1507318, 0, 0, -1507317, 0, 0, -1441792, 0, 0, -1441791, 0, 0, -1441790, 0, 0, -1441789, 0, 0, -1441788, 0, 0, -1441787, 0, 0, -1441786, 0, 0, -1441785, 0, 0, -1441784, 0, 0, -1441783, 0, 0, -1441782, 0, 0, -1441781, 0, 0, -1376256, 0, 0, -1376255, 0, 0, -1376254, 0, 0, -1376253, 0, 0, -1376252, 0, 0, -1376251, 0, 0, -1376250, 0, 0, -1376249, 0, 0, -1376248, 0, 0, -1376247, 0, 0, -1376246, 0, 0, -1376245, 0, 0, -1310720, 0, 0, -1310719, 0, 0, -1310718, 0, 0, -1310717, 0, 0, -1310716, 0, 0, -1310715, 0, 0, -1310714, 0, 0, -1310713, 0, 0, -1310712, 0, 0, -1310711, 0, 0, -1310710, 0, 0, -1310709, 0, 0, -1245184, 0, 0, -1245183, 0, 0, -1245182, 0, 0, -1245181, 0, 0, -1245180, 0, 0, -1245179, 0, 0, -1245178, 0, 0, -1245177, 0, 0, -1245176, 0, 0, -1245175, 0, 0, -1245174, 0, 0, -1245173, 0, 0, -1179648, 0, 0, -1179647, 0, 0, -1179646, 0, 0, -1179645, 0, 0, -1179644, 0, 0, -1179643, 0, 0, -1179642, 0, 0, -1179641, 0, 0, -1179640, 0, 0, -1179639, 0, 0, -1179638, 0, 0, -1179637, 0, 0, -1114112, 0, 0, -1114111, 0, 0, -1114110, 0, 0, -1114109, 0, 0, -1114108, 0, 0, -1114107, 0, 0, -1114106, 0, 0, -1114105, 0, 0, -1114104, 0, 0, -1114103, 0, 0, -1114102, 0, 0, -1114101, 0, 0, 1048576, 0, 0, 1048587, 0, 0, 1114112, 0, 0, 1114123, 0, 0, 1179648, 0, 0, 1179659, 0, 0, 1245184, 0, 0, 1245185, 0, 0, 1245194, 0, 0, 1245195, 0, 0, 1310720, 0, 0, 1310721, 0, 0, 1310730, 0, 0, 1310731, 0, 0, 1376256, 0, 0, 1376257, 0, 0, 1376258, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376267, 0, 0, 1835008, 0, 0, 1835009, 0, 0, 1835010, 0, 0, 1835017, 0, 0, 1835018, 0, 0, 1835019, 0, 0, 1900544, 0, 0, 1900545, 0, 0, 1900554, 0, 0, 1900555, 0, 0, 1966080, 0, 0, 1966081, 0, 0, 1966090, 0, 0, 1966091, 0, 0, 2031616, 0, 0, 2031627, 0, 0, 2097152, 0, 0, 2097163, 0, 0, 2424832, 0, 0, 2424843, 0, 0, 2490368, 0, 0, 2490379, 0, 0, 2555904, 0, 0, 2555905, 0, 0, 2555914, 0, 0, 2555915, 0, 0, 2621440, 0, 0, 2621441, 0, 0, 2621450, 0, 0, 2621451, 0, 0, 2686976, 0, 0, 2686977, 0, 0, 2686978, 0, 0, 2686985, 0, 0, 2686986, 0, 0, 2686987, 0, 0, 3604480, 0, 0, 3604481, 0, 0, 3604482, 0, 0, 3604489, 0, 0, 3604490, 0, 0, 3604491, 0, 0, 3670016, 0, 0, 3670017, 0, 0, 3670026, 0, 0, 3670027, 0, 0, 3735552, 0, 0, 3735553, 0, 0, 3735562, 0, 0, 3735563, 0, 0, 3801088, 0, 0, 3801099, 0, 0, 3866624, 0, 0, 3866635, 0, 0, 4390912, 0, 0, 4390913, 0, 0, 4390914, 0, 0, 4390915, 0, 0, 4390920, 0, 0, 4390921, 0, 0, 4390922, 0, 0, 4390923, 0, 0, 4784128, 0, 0, 4784129, 0, 0, 4784130, 0, 0, 4784131, 0, 0, 4784136, 0, 0, 4784137, 0, 0, 4784138, 0, 0, 4784139, 0, 0, 4849664, 0, 0, 4849665, 0, 0, 4849666, 0, 0, 4849673, 0, 0, 4849674, 0, 0, 4849675, 0, 0, 4915200, 0, 0, 4915201, 0, 0, 4915210, 0, 0, 4915211, 0, 0, 4980736, 0, 0, 4980747, 0, 0, 5373952, 0, 0, 5373963, 0, 0, 5439488, 0, 0, 5439489, 0, 0, 5439498, 0, 0, 5439499, 0, 0, 5505024, 0, 0, 5505025, 0, 0, 5505026, 0, 0, 5505033, 0, 0, 5505034, 0, 0, 5505035, 0, 0, 5570560, 0, 0, 5570561, 0, 0, 5570562, 0, 0, 5570563, 0, 0, 5570568, 0, 0, 5570569, 0, 0, 5570570, 0, 0, 5570571, 0, 0, 5963776, 0, 0, 5963777, 0, 0, 5963778, 0, 0, 5963779, 0, 0, 5963784, 0, 0, 5963785, 0, 0, 5963786, 0, 0, 5963787, 0, 0, 6029312, 0, 0, 6029323, 0, 0, 6094848, 0, 0, 6094859, 0, 0, 6160384, 0, 0, 6160395, 0, 0, 6225920, 0, 0, 6225931, 0, 0, 6291456, 0, 0, 6291467, 0, 0, 6356992, 0, 0, 6357003, 0, 0, 6422528, 0, 0, 6422539, 0, 0, 6488064, 0, 0, 6488065, 0, 0, 6488066, 0, 0, 6488067, 0, 0, 6488068, 0, 0, 6488069, 0, 0, 6488070, 0, 0, 6488071, 0, 0, 6488072, 0, 0, 6488073, 0, 0, 6488074, 0, 0, 6488075, 0, 0, 6553600, 0, 0, 6553601, 0, 0, 6553602, 0, 0, 6553603, 0, 0, 6553604, 0, 0, 6553605, 0, 0, 6553606, 0, 0, 6553607, 0, 0, 6553608, 0, 0, 6553609, 0, 0, 6553610, 0, 0, 6553611, 0, 0, 6619136, 0, 0, 6619137, 0, 0, 6619138, 0, 0, 6619139, 0, 0, 6619140, 0, 0, 6619141, 0, 0, 6619142, 0, 0, 6619143, 0, 0, 6619144, 0, 0, 6619145, 0, 0, 6619146, 0, 0, 6619147, 0, 0, 6684672, 0, 0, 6684673, 0, 0, 6684674, 0, 0, 6684675, 0, 0, 6684676, 0, 0, 6684677, 0, 0, 6684678, 0, 0, 6684679, 0, 0, 6684680, 0, 0, 6684681, 0, 0, 6684682, 0, 0, 6684683, 0, 0, 6750208, 0, 0, 6750209, 0, 0, 6750210, 0, 0, 6750211, 0, 0, 6750212, 0, 0, 6750213, 0, 0, 6750214, 0, 0, 6750215, 0, 0, 6750216, 0, 0, 6750217, 0, 0, 6750218, 0, 0, 6750219, 0, 0, 6815744, 0, 0, 6815745, 0, 0, 6815746, 0, 0, 6815747, 0, 0, 6815748, 0, 0, 6815749, 0, 0, 6815750, 0, 0, 6815751, 0, 0, 6815752, 0, 0, 6815753, 0, 0, 6815754, 0, 0, 6815755, 0, 0, 6881280, 0, 0, 6881281, 0, 0, 6881282, 0, 0, 6881283, 0, 0, 6881284, 0, 0, 6881285, 0, 0, 6881286, 0, 0, 6881287, 0, 0, 6881288, 0, 0, 6881289, 0, 0, 6881290, 0, 0, 6881291, 0, 0, 6946816, 0, 0, 6946817, 0, 0, 6946818, 0, 0, 6946819, 0, 0, 6946820, 0, 0, 6946821, 0, 0, 6946822, 0, 0, 6946823, 0, 0, 6946824, 0, 0, 6946825, 0, 0, 6946826, 0, 0, 6946827, 0, 0 )
 
 [node name="ParallaxViewport" parent="." instance=ExtResource( 6 )]
 
@@ -517,13 +759,13 @@ follow_viewport_enable = true
 
 [node name="PreGame" type="Node2D" parent="CanvasLayer"]
 pause_mode = 2
-script = ExtResource( 16 )
+script = ExtResource( 2 )
 
 [node name="Background" type="Sprite" parent="CanvasLayer/PreGame"]
-material = ExtResource( 13 )
+material = SubResource( 23 )
 position = Vector2( 0, -1024 )
 scale = Vector2( 3, 3 )
-texture = ExtResource( 15 )
+texture = ExtResource( 13 )
 centered = false
 
 [node name="PreGameCamera" type="Camera2D" parent="CanvasLayer/PreGame"]
@@ -538,42 +780,105 @@ default_color = Color( 1, 1, 1, 1 )
 [node name="FishingRod" parent="CanvasLayer/PreGame" instance=ExtResource( 4 )]
 position = Vector2( 456, -391 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/PreGame"]
-autoplay = "idle"
-anims/RESET = SubResource( 14 )
-anims/StartScene = SubResource( 15 )
-anims/idle = SubResource( 19 )
-
 [node name="Character" type="Sprite" parent="CanvasLayer/PreGame"]
-material = SubResource( 21 )
+material = SubResource( 23 )
 position = Vector2( 483, -415 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 11 )
 
 [node name="Boat" type="Sprite" parent="CanvasLayer/PreGame"]
-material = SubResource( 21 )
+material = SubResource( 23 )
 position = Vector2( 543, -370 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 12 )
 
-[node name="GameBackground" type="CanvasLayer" parent="."]
-layer = -3
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/PreGame"]
+stream = ExtResource( 19 )
 
-[node name="ColorRect" type="ColorRect" parent="GameBackground"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.756863, 0.454902, 0.392157, 1 )
-script = ExtResource( 2 )
-initial_color_pos_path = NodePath("../InitialColor")
-final_color_pos_path = NodePath("../FinalColor")
-target_path = NodePath("../../Hook")
-initial_color = Color( 0.756863, 0.454902, 0.392157, 1 )
-final_color = Color( 0.188235, 0.0470588, 0, 1 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/PreGame"]
+autoplay = "credits"
+anims/RESET = SubResource( 14 )
+anims/StartScene = SubResource( 15 )
+anims/credits = SubResource( 19 )
 
-[node name="InitialColor" type="Position2D" parent="GameBackground"]
-position = Vector2( 0, 1024 )
+[node name="Label" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1270.0
+margin_right = 708.0
+margin_bottom = -1084.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "A game by:
+   Naxitho100        PuntitOwO
+   Potatsu               Pyomm"
 
-[node name="FinalColor" type="Position2D" parent="GameBackground"]
-position = Vector2( 0, 3200 )
+[node name="Label2" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1270.0
+margin_right = 708.0
+margin_bottom = -1084.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "Tools used:"
 
-[editable path="Hook"]
+[node name="Label3" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1270.0
+margin_right = 738.0
+margin_bottom = -1084.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "
+   Pixaki by Luke Rogers
+   Pixel Space Bg. by Deep-Fold"
+
+[node name="Label4" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 12.0
+margin_top = -1270.0
+margin_right = 745.0
+margin_bottom = -1084.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "
+   Bosca Ceoil by Terry Cavanagh
+   SXFR by DrPetter"
+
+[node name="Label5" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1270.0
+margin_right = 708.0
+margin_bottom = -1084.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "Made for FAU Jam #1"
+
+[node name="Label6" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1603.0
+margin_right = 708.0
+margin_bottom = -1417.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "Special thanks to:"
+
+[node name="Label7" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1603.0
+margin_right = 708.0
+margin_bottom = -1417.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "
+   LiterallyAnyone, Hayden
+   for their shaders"
+
+[node name="Label8" type="Label" parent="CanvasLayer/PreGame"]
+margin_left = 51.0
+margin_top = -1480.0
+margin_right = 708.0
+margin_bottom = -1294.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 27 )
+text = "
+   Junecl for hosting the Jam
+   You for playing!"
