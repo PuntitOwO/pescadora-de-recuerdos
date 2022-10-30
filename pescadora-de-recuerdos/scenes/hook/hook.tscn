@@ -13,10 +13,9 @@ radius = 21.0
 
 [sub_resource type="Curve" id=3]
 min_value = -1.0
-_data = [ Vector2( 0, 0.954545 ), 0.0, 0.0, 0, 0, Vector2( 0.0561798, 1 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.915909 ), 0.0, 0.0, 0, 0, Vector2( 0.808989, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=4]
-width = 2000
 curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=2]
@@ -30,9 +29,9 @@ initial_velocity = 50.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 3.0
-color = Color( 0.854902, 0.968627, 1, 1 )
-hue_variation = 0.01
-hue_variation_random = 0.01
+color = Color( 0.180392, 0.682353, 0.831373, 1 )
+hue_variation = 0.02
+hue_variation_random = 0.02
 hue_variation_curve = SubResource( 4 )
 
 [node name="Hook" type="KinematicBody2D" groups=["Hook"]]
