@@ -1357,6 +1357,9 @@ script = ExtResource( 17 )
 modulate = Color( 0.443137, 0.603922, 0.658824, 1 )
 material = SubResource( 26 )
 
+[node name="CollisionShape2D" parent="Decorations/Whale1" index="2"]
+disabled = true
+
 [node name="Whale2" parent="Decorations" instance=ExtResource( 18 )]
 modulate = Color( 0.309804, 0.270588, 0.352941, 1 )
 position = Vector2( -379, 2785 )
@@ -1370,6 +1373,9 @@ material = SubResource( 26 )
 [node name="AnimationPlayer" parent="Decorations/Whale2" index="1"]
 anims/swimming = SubResource( 24 )
 
+[node name="CollisionShape2D" parent="Decorations/Whale2" index="2"]
+disabled = true
+
 [node name="Whale3" parent="Decorations" instance=ExtResource( 18 )]
 modulate = Color( 0.309804, 0.270588, 0.352941, 1 )
 position = Vector2( 1202, 4576 )
@@ -1382,6 +1388,9 @@ material = SubResource( 26 )
 
 [node name="AnimationPlayer" parent="Decorations/Whale3" index="1"]
 anims/swimming = SubResource( 25 )
+
+[node name="CollisionShape2D" parent="Decorations/Whale3" index="2"]
+disabled = true
 
 [node name="VoidTileMap" parent="." instance=ExtResource( 7 )]
 material = SubResource( 9 )

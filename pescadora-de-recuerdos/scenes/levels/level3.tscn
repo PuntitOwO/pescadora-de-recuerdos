@@ -443,7 +443,7 @@ position = Vector2( 296, 4618 )
 image_index = 7
 
 [node name="Object3" parent="Collectables" instance=ExtResource( 10 )]
-position = Vector2( 408, 6029 )
+position = Vector2( 397, 5855 )
 image_index = 8
 next_level = true
 

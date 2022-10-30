@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/materials/grayscale.tres" type="Material" id=1]
 [ext_resource path="res://resources/sprites/enemies/whale_spritesheet.png" type="Texture" id=2]
@@ -20,7 +20,11 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[node name="Whale" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 40.0
+height = 192.0
+
+[node name="Whale" type="KinematicBody2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 1 )
@@ -32,3 +36,8 @@ hframes = 2
 root_node = NodePath("../Sprite")
 autoplay = "swimming"
 anims/swimming = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -82, -77 )
+rotation = 1.5708
+shape = SubResource( 2 )

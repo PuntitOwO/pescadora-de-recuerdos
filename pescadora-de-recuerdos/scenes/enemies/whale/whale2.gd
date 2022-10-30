@@ -1,19 +1,21 @@
-extends Node2D
+extends Enemy
 
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var player_near = false
-
+export var time = 3.0
+export var interval = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var tween:= create_tween().set_loops().set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(self, "position:x", -1250*sign(scale[0]),time).as_relative()
+	tween.tween_interval(interval)
+	tween.tween_callback(self, "flip_x")
+	tween.tween_property(self, "position:x", 1250*sign(scale[0]),time).as_relative()
+	tween.tween_interval(interval)
+	tween.tween_callback(self, "flip_x")
+	
+func flip_x():
+	scale[0] *= -1
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	if abs(get_tree().get_nodes_in_group("Hook")[0].global_position[1] - global_position[1]) <= 500:
-		player_near = true 
-	if player_near == true:
-		global_position[0] -= 50 * delta * sign(scale[0])
