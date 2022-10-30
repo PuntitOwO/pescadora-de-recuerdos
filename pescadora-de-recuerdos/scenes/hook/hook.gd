@@ -12,6 +12,8 @@ export var bubble_duration = 60
 var bubble_time_activated = 0
 var velocity := Vector2.ZERO
 
+signal damage
+
 func _ready():
 	get_viewport().audio_listener_enable_2d = true
 	$bubbles1.emitting = false
@@ -70,6 +72,7 @@ func _collected(body:Node2D, image_index:int, next_level:bool) -> void:
 
 func _knockback(direction:Vector2) -> void:
 	$hook_hurt.play()
+	emit_signal("damage")
 	set_physics_process(false)
 	velocity = Vector2.ZERO
 	var tween = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT).set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
