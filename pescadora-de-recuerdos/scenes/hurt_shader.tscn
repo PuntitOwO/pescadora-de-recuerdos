@@ -4,8 +4,8 @@
 
 [sub_resource type="Gradient" id=1]
 interpolation_mode = 1
-offsets = PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 )
-colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0, 0.6, 0, 0, 0, 0.4, 0, 0, 0, 0 )
+offsets = PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 )
+colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0.94902, 0, 0, 0, 0.901961, 0, 0, 0, 0.85098, 0, 0, 0, 0.8, 0, 0, 0, 0.74902, 0, 0, 0, 0.701961, 0, 0, 0, 0.65098, 0, 0, 0, 0.6, 0, 0, 0, 0.596078 )
 
 [sub_resource type="GradientTexture2D" id=2]
 flags = 3

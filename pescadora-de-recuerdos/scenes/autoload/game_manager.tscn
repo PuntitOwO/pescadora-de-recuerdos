@@ -35,7 +35,7 @@ images = [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 11
 levels = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ) ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 2
+layer = 15
 
 [node name="Screenshot" type="Sprite" parent="CanvasLayer"]
 unique_name_in_owner = true
