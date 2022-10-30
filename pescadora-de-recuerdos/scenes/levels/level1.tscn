@@ -348,54 +348,6 @@ tracks/4/keys = {
 "update": 0,
 "values": [ false ]
 }
-tracks/5/type = "value"
-tracks/5/path = NodePath("Boat:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 543, -370 ) ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Character:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 483, -415 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Character:scale")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 3, 3 ) ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("FishingRod:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 456, -391 ) ]
-}
 
 [sub_resource type="Animation" id=15]
 resource_name = "StartScene"
@@ -439,9 +391,12 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 5 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 1.6, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "_audio_play"
+}, {
 "args": [  ],
 "method": "_start_game"
 } ]
