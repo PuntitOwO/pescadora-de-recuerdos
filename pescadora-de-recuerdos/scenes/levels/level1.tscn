@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://scenes/levels/background_color.gd" type="Script" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://scenes/collectables/object.tscn" type="PackedScene" id=10]
 [ext_resource path="res://resources/sprites/character/boat.png" type="Texture" id=11]
 [ext_resource path="res://resources/sprites/character/character_1.png" type="Texture" id=12]
-[ext_resource path="res://resources/materials/grayscale.tres" type="Material" id=13]
 [ext_resource path="res://resources/sprites/backgrounds/background_1.png" type="Texture" id=15]
 [ext_resource path="res://scenes/levels/pregame_level1.gd" type="Script" id=16]
 
@@ -161,6 +160,52 @@ extents = Vector2( 32, 512 )
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 448, 32 )
+
+[sub_resource type="Shader" id=20]
+code = "shader_type canvas_item;
+uniform sampler2D Colormap : hint_albedo;
+
+void fragment() {
+// Get the fragment location
+	vec3 location = vec3(UV, 0.0);
+
+// Get the colors from the image at specified location
+	vec3 colorIn;
+	float alphaIn;
+	{
+		vec4 TEXTURE_tex_read = texture(TEXTURE, location.xy);
+		colorIn = TEXTURE_tex_read.rgb;
+		alphaIn = TEXTURE_tex_read.a;
+	}
+
+// get the greyscale value through the highest of r, g, and b
+	float grey;
+	{
+		vec3 c = colorIn;
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		grey = max2;
+	}
+
+// Read the colormap and use the greyscale value to map in the new color.
+	vec3 colorOut;
+	float alphaOut;
+	{
+		vec4 n_tex_read = texture(Colormap, vec2(grey, 0.0));
+		colorOut = n_tex_read.rgb;
+		alphaOut = n_tex_read.a;
+	}
+
+// Profit.
+	COLOR.rgb = colorOut;
+	COLOR.a = alphaIn;
+
+}"
+
+[sub_resource type="ShaderMaterial" id=21]
+resource_local_to_scene = true
+shader = SubResource( 20 )
+shader_param/Colormap = ExtResource( 3 )
 
 [sub_resource type="Animation" id=14]
 length = 0.001
@@ -490,7 +535,7 @@ pause_mode = 2
 script = ExtResource( 16 )
 
 [node name="Background" type="Sprite" parent="CanvasLayer/PreGame"]
-material = ExtResource( 13 )
+material = SubResource( 21 )
 position = Vector2( 0, -1024 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 15 )
@@ -512,7 +557,7 @@ width = 3.0
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="Character" type="Sprite" parent="CanvasLayer/PreGame"]
-material = ExtResource( 13 )
+material = SubResource( 21 )
 position = Vector2( 483, -415 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 12 )
@@ -521,7 +566,7 @@ texture = ExtResource( 12 )
 position = Vector2( 456, -391 )
 
 [node name="Boat" type="Sprite" parent="CanvasLayer/PreGame"]
-material = ExtResource( 13 )
+material = SubResource( 21 )
 position = Vector2( 543, -370 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 11 )
@@ -532,18 +577,18 @@ layer = -3
 [node name="ColorRect" type="ColorRect" parent="GameBackground"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.756863, 0.454902, 0.392157, 1 )
+color = Color( 0.309804, 0.270588, 0.352941, 1 )
 script = ExtResource( 2 )
 initial_color_pos_path = NodePath("../InitialColor")
 final_color_pos_path = NodePath("../FinalColor")
 target_path = NodePath("../../Hook")
-initial_color = Color( 0.756863, 0.454902, 0.392157, 1 )
-final_color = Color( 0.188235, 0.0470588, 0, 1 )
+initial_color = Color( 0.309804, 0.270588, 0.352941, 1 )
+final_color = Color( 0.141176, 0.054902, 0.113725, 1 )
 
 [node name="InitialColor" type="Position2D" parent="GameBackground"]
 position = Vector2( 0, 1024 )
 
 [node name="FinalColor" type="Position2D" parent="GameBackground"]
-position = Vector2( 0, 3200 )
+position = Vector2( 0, 4421 )
 
 [editable path="Hook"]
