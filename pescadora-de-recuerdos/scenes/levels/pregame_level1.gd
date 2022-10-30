@@ -13,5 +13,8 @@ func _process(_delta: float) -> void:
 			$AnimationPlayer.play("StartScene")
 			set_process(false)
 
+func _audio_play() -> void:
+	$AudioStreamPlayer.play()
+
 func _start_game() -> void:
 	get_tree().paused = false
