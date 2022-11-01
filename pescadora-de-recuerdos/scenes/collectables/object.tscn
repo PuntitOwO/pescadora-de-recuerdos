@@ -31,7 +31,7 @@ script = ExtResource( 2 )
 material = ExtResource( 3 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
-offset = Vector2( 0, -9.9717 )
+offset = Vector2( 0, -10 )
 hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
